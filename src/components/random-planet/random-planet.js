@@ -19,6 +19,7 @@ export default class RandomPlanet extends Component {
         this.services
             .getItem('planets', id)
             .then((planet) => {
+                console.log(planet)
                 this.setState({ planet })
             })
     }

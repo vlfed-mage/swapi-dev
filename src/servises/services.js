@@ -5,6 +5,7 @@ export default class Services {
         const regex = /\/([0-9]*)\/$/;
         return resource.url.match(regex)[1];
     }
+
     _transformPlanet(planet) {
         return {
             id: this._extractId(planet),
@@ -18,7 +19,7 @@ export default class Services {
     async getResources(source, id = '') {
         const response = await fetch(`${ this._bodyUrl }${ source }/${ id }`);
 
-        if(!response.ok) {
+        if (!response.ok) {
             throw new Error(`
                 Could not fetch. Status ${ response.status }
             `)
