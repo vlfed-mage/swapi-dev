@@ -4,19 +4,19 @@ const Header = () => {
     return (
         <div className="header d-flex">
             <h3>
-                <a href="javascript:void(0)">
+                <a href="#">
                     Star DB
                 </a>
             </h3>
             <ul className="d-flex">
                 <li>
-                    <a href="javascript:void(0)">People</a>
+                    <a href="#">People</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">Planets</a>
+                    <a href="#">Planets</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">Starships</a>
+                    <a href="#">Starships</a>
                 </li>
             </ul>
         </div>
