@@ -1,26 +1,49 @@
 import React, { Component } from 'react';
+import Services from '../../servises';
 
 export default class RandomPlanet extends Component {
 
+    services = new Services();
+    state = {
+        planet: {}
+    };
+
+    constructor(prop) {
+        super(prop);
+
+        this.updatePlanet();
+    }
+
+    updatePlanet() {
+        const id = Math.floor(Math.random()*24 + 1);
+        this.services
+            .getItem('planets', id)
+            .then((planet) => {
+                this.setState({ planet })
+            })
+    }
+
     render() {
+        const { planet: { id, name, population, rotationPeriod, diameter} } = this.state;
+
         return (
-            <div className="random-planet jumbotron rounded">
+            <div className="random-planet jumbotron rounded" >
                 <img className="planet-image"
-                     src="https://starwars-visualguide.com/assets/img/planets/5.jpg"/>
+                     src={ `https://starwars-visualguide.com/assets/img/planets/${ id }.jpg` } />
                 <div>
-                    <h4>Planet Name</h4>
+                    <h4>{ name }</h4>
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">
                             <span className="term">Population</span>
-                            <span>123124</span>
+                            <span>{ population }</span>
                         </li>
                         <li className="list-group-item">
                             <span className="term">Rotation Period</span>
-                            <span>43</span>
+                            <span>{ rotationPeriod }</span>
                         </li>
                         <li className="list-group-item">
                             <span className="term">Diameter</span>
-                            <span>100</span>
+                            <span>{ diameter }</span>
                         </li>
                     </ul>
                 </div>
