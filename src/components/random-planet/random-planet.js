@@ -5,7 +5,7 @@ export default class RandomPlanet extends Component {
 
     services = new Services();
     state = {
-        planets: {}
+        planet: {}
     };
 
     constructor(prop) {
@@ -14,27 +14,17 @@ export default class RandomPlanet extends Component {
         this.updatePlanet();
     }
 
-    updatePlanet = () => {
-        const id = '51'
+    updatePlanet() {
+        const id = Math.floor(Math.random()*24 + 1);
         this.services
             .getItem('planets', id)
             .then((planet) => {
-                this.setState(() => {
-                    this.services._transformPlanet(planet)
-                })
+                this.setState({ planet })
             })
     }
 
     render() {
-        const {
-            planets: {
-                id,
-                name,
-                population,
-                rotationPeriod,
-                diameter
-            }
-        } = this.state;
+        const { planet: { id, name, population, rotationPeriod, diameter} } = this.state;
 
         return (
             <div className="random-planet jumbotron rounded" >

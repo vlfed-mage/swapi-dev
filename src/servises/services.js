@@ -1,17 +1,17 @@
 export default class Services {
     _bodyUrl = 'https://swapi.dev/api/';
 
-    _extractId = (resource) => {
+    _extractId(resource) {
         const regex = /\/([0-9]*)\/$/;
         return resource.url.match(regex)[1];
     }
-    _transformPlanet = (planet) => {
+    _transformPlanet(planet) {
         return {
             id: this._extractId(planet),
             name: planet.name,
             population: planet.population,
             rotationPeriod: planet.rotation_period,
-            diameter: planet.diameter
+            diameter: planet.diameter,
         };
     }
 
@@ -34,6 +34,11 @@ export default class Services {
 
     async getItem(name, id) {
         const response = await this.getResources(name, id);
-        return this._transformPlanet(response);
+        switch (name) {
+            case 'planets':
+                return this._transformPlanet(response);
+            default:
+                return response;
+        }
     }
 }
