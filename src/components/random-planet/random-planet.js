@@ -2,19 +2,22 @@ import React, { Component, Fragment } from 'react';
 
 import Services from '../../servises';
 import Loader from '../loader';
+import ErrorIndicator from '../error-indicator';
 
 export default class RandomPlanet extends Component {
 
     services = new Services();
     state = {
         planet: {},
-        loading: true
+        loading: true,
+        error: false
     };
 
     componentDidMount() {
+        this.updatePlanet();
         setInterval(
             () => this.updatePlanet(),
-            10000
+            5000
         );
     }
 
@@ -25,25 +28,37 @@ export default class RandomPlanet extends Component {
         })
     }
 
+    onError = () => {
+        this.setState({
+            error: true,
+            loading: false
+        })
+    }
+
     updatePlanet() {
-        this.setState({ loading: true })
-        const id = Math.floor(Math.random()*24 + 1);
+        this.setState({
+            error: false,
+            loading: true
+        })
+        const id = Math.floor(Math.random()*80 + 1);
         this.services
             .getItem('planets', id)
-            .then((planet) => {
-                this.onPlanetLoaded(planet);
-            })
+            .then(this.onPlanetLoaded)
+            .catch(this.onError)
     }
 
     render() {
-        const { loading } = this.state;
+        const { loading, error } = this.state;
 
         return (
             <div className="random-planet jumbotron rounded" >
                 {
+
                     loading
                         ? <Loader />
-                        : <RandomPlanetView planet={ this.state.planet } />
+                        : error
+                            ? <ErrorIndicator />
+                            : <RandomPlanetView planet={ this.state.planet } />
                 }
             </div>
 
