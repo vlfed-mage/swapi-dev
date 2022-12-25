@@ -1,6 +1,6 @@
 import React from 'react';
 
-import icon from './death-star.png'
+import icon from '../../images/death-star.png'
 
 const ErrorIndicator = () => {
     return (
