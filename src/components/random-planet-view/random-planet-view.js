@@ -1,4 +1,5 @@
 import React, {Fragment} from "react";
+
 import dumb from "../../images/death-star.png";
 
 const RandomPlanetView = ({ planet, onImageError }) => {
