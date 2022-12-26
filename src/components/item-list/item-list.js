@@ -20,10 +20,13 @@ export default class ItemList extends Component {
     }
 
     renderItemsList = (arr) => {
+        const { onPersonSelected } = this.props;
+
         return arr.map(({ name, id }) => {
             return (
                 <li
                     className="list-group-item"
+                    onClick={ () => onPersonSelected(id) }
                     key={ id }>
                     { name }
                 </li>
@@ -34,7 +37,7 @@ export default class ItemList extends Component {
     render() {
         const { people } = this.state;
 
-        if(!people) {
+        if (!people) {
             return <Loader />
         }
 
