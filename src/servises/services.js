@@ -6,13 +6,23 @@ export default class Services {
         return resource.url.match(regex)[1];
     }
 
-    _transformPlanet(planet) {
+    _transformPlanet = (planet) => {
         return {
             id: this._extractId(planet),
             name: planet.name,
             population: planet.population,
             rotationPeriod: planet.rotation_period,
             diameter: planet.diameter,
+        };
+    }
+
+    _transformPerson = (person) => {
+        return {
+            id: this._extractId(person),
+            name: person.name,
+            gender: person.gender,
+            birthYear: person.birth_year,
+            eyeColor: person.eye_color,
         };
     }
 
@@ -30,7 +40,14 @@ export default class Services {
 
     async getCollection(name) {
         const response = await this.getResources(name);
-        return response.results;
+        switch (name) {
+            case 'planets':
+                return response.results.map(this._transformPlanet);
+            case 'people':
+                return response.results.map(this._transformPerson);
+            default:
+                return response.results;
+        }
     }
 
     async getItem(name, id) {
@@ -38,6 +55,8 @@ export default class Services {
         switch (name) {
             case 'planets':
                 return this._transformPlanet(response);
+            case 'people':
+                return this._transformPerson(response);
             default:
                 return response;
         }
