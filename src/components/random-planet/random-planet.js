@@ -19,7 +19,7 @@ export default class RandomPlanet extends Component {
         this.updatePlanet();
         this.updatePlanetInterval = setInterval(
             this.updatePlanet,
-            5000
+            10000
         )
     }
 
@@ -43,6 +43,11 @@ export default class RandomPlanet extends Component {
     }
 
     updatePlanet = () => {
+        this.setState({
+            loading: true,
+            error: false
+        })
+
         const id = Math.floor(Math.random()*28 + 2);
 
         this.apiServices

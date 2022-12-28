@@ -29,11 +29,23 @@ export default class ApiServices {
         }
     }
 
+    _transformPerson = (person) => {
+        return {
+            id: this._extractId(person.url),
+            name: person.name,
+            gender: person.gender,
+            birthYear: person.birth_year,
+            eyeColor: person.eye_color,
+        }
+    }
+
     async getCollection(name) {
         const collection = await this._getData(name);
         switch (name) {
             case 'planets':
                 return collection.results.map(this._transformPlanet);
+            case 'people':
+                return collection.results.map(this._transformPerson)
             default:
                 return collection.results;
         }
@@ -44,6 +56,8 @@ export default class ApiServices {
         switch (name) {
             case 'planets':
                 return this._transformPlanet(item);
+            case 'people':
+                return this._transformPerson(item)
             default:
                 return item;
         }
