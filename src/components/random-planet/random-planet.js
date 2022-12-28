@@ -1,53 +1,69 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import ApiServices from "../../api-services";
 
 import LoaderIndicator from "../loader-indicator";
+import RandomPlanetView from "../random-planet-view";
+import ErrorIndicator from "../error-indicator";
 
 export default class RandomPlanet extends Component {
 
     apiServices = new ApiServices();
     state = {
-        name: null,
-        loading: true
+        planet: null,
+        loading: true,
+        error: false
     }
 
-    checkApi = () => {
+    componentDidMount() {
+        this.updatePlanet();
+        this.updatePlanetInterval = setInterval(
+            this.updatePlanet,
+            5000
+        )
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.updatePlanetInterval)
+    }
+
+    onPlanetLoaded = (planet) => {
+        this.setState({
+            planet,
+            loading: false,
+            error: false
+        })
+    }
+
+    onPlanetError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
+    }
+
+    updatePlanet = () => {
+        const id = Math.floor(Math.random()*28 + 2);
+
         this.apiServices
-            .getItem('blah', 4)
-            .then(data => console.log(data))
+            .getItem('planets', id)
+            .then( this.onPlanetLoaded )
+            .catch( this.onPlanetError )
     }
 
     render() {
-        const { loading } = this.state;
+        const { planet, loading, error } = this.state;
 
         return (
             <div className="random-planet jumbotron rounded">
                 {
                     loading
                         ? <LoaderIndicator />
-                        : <Fragment>
-                            <img className="planet-image"
-                                 src="https://starwars-visualguide.com/assets/img/planets/5.jpg"
-                                 onClick={ this.checkApi } />
-                            <div>
-                                <h4>Planet Name</h4>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">
-                                        <span className="term">Population</span>
-                                        <span>123124</span>
-                                    </li>
-                                    <li className="list-group-item">
-                                        <span className="term">Rotation Period</span>
-                                        <span>43</span>
-                                    </li>
-                                    <li className="list-group-item">
-                                        <span className="term">Diameter</span>
-                                        <span>100</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </Fragment>
+                        : error
+                            ? <ErrorIndicator />
+                            : <RandomPlanetView
+                                planet={ planet } />
+
                 }
             </div>
 
