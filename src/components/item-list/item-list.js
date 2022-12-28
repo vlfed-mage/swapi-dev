@@ -9,13 +9,16 @@ export default class ItemList extends Component {
 
     apiServices = new ApiServices();
     state = {
-        people: {},
+        people: null,
         loading: true,
         error: false
     }
 
     componentDidMount() {
-        this.updatePeople()
+        this.apiServices
+            .getCollection('people')
+            .then( this.onPeopleLoaded )
+            .catch( this.onPeopleError )
     }
 
     onPeopleLoaded = (people) => {
@@ -32,18 +35,12 @@ export default class ItemList extends Component {
         })
     }
 
-    updatePeople = () => {
-        this.apiServices
-            .getCollection('people')
-            .then( this.onPeopleLoaded )
-            .catch( this.onPeopleError )
-    }
-
     renderPeopleList = (people) => {
         return people.map(({ name, id }) => {
             return (
                 <li
                     className="list-group-item"
+                    onClick={ () => this.props.onListItemSelected(id) }
                     key={ id } >
                     { name }
                 </li>

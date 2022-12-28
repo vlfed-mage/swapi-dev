@@ -1,19 +1,17 @@
 import React, { Fragment } from "react";
 
-import dumb from "../../images/death-star.svg";
+import Helpers from "../helpers";
 
 const RandomPlanetView = ({ planet }) => {
-    const { id, name, population, rotationPeriod, diameter } = planet;
+    const helpers = new Helpers();
 
-    const onImageError = (e) => {
-        e.target.src = dumb
-    }
+    const { id, name, population, rotationPeriod, diameter } = planet;
 
     return (
         <Fragment>
             <img className="planet-image"
                  src={ `https://starwars-visualguide.com/assets/img/planets/${ id }.jpg` }
-                 onError={ onImageError } />
+                 onError={ helpers.onImageError } />
             <div>
                 <h4>{ name }</h4>
                 <ul className="list-group list-group-flush">

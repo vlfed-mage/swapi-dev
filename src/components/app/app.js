@@ -6,7 +6,19 @@ import ItemList from '../item-list';
 import PersonDetails from '../person-details';
 
 export default class App extends Component {
+
+    state = {
+        selectedPersonId: null
+    }
+
+    onListItemSelected = (id) => {
+        this.setState({
+            selectedPersonId: id
+        })
+    }
+
     render() {
+        const { selectedPersonId } = this.state;
         return (
             <div className='app-wrapper'>
                 <Header/>
@@ -14,10 +26,12 @@ export default class App extends Component {
 
                 <div className="row mb2">
                     <div className="col-md-6">
-                        <ItemList/>
+                        <ItemList
+                            onListItemSelected={ this.onListItemSelected } />
                     </div>
                     <div className="col-md-6">
-                        <PersonDetails/>
+                        <PersonDetails
+                            selectedPersonId={ selectedPersonId } />
                     </div>
                 </div>
             </div>

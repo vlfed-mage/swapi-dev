@@ -1,31 +1,67 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+
+import ApiServices from "../../api-services";
+
+import LoaderIndicator from "../loader-indicator";
+import PersonDetailsView from "../person-details-view";
+import ErrorIndicator from "../error-indicator";
 
 export default class PersonDetails extends Component {
 
-    render() {
-        return (
-            <div className="person-details card">
-                <img className="person-image"
-                     src="https://starwars-visualguide.com/assets/img/characters/3.jpg"/>
+    apiServices = new ApiServices();
+    state = {
+        person: null,
+        loading: true,
+        error: false
+    }
 
-                <div className="card-body">
-                    <h4>R2-D2</h4>
-                    <ul className="list-group list-group-flush">
-                        <li className="list-group-item">
-                            <span className="term">Gender</span>
-                            <span>male</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="term">Birth Year</span>
-                            <span>43</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span className="term">Eye Color</span>
-                            <span>red</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    componentDidUpdate(prevProps) {
+        const { selectedPersonId } = this.props;
+
+        if (selectedPersonId !== prevProps.selectedPersonId) {
+            this.updatePerson(selectedPersonId)
+        }
+    }
+
+    onPersonLoaded = (person) => {
+        this.setState({
+            person,
+            loading: false
+        })
+    }
+
+    onPersonError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
+    }
+
+    updatePerson = (id) => {
+        this.setState({
+            loading: true,
+            error: false
+        })
+        this.apiServices
+            .getItem('people', id)
+            .then( this.onPersonLoaded )
+            .catch( this.onPersonError )
+    }
+
+    render() {
+        const { person, loading, error } = this.state;
+
+        if (!person && !error) {
+            return null;
+        }
+
+        return (
+            loading
+                ? <LoaderIndicator />
+                : error
+                    ? <ErrorIndicator />
+                    : <PersonDetailsView
+                        person={ person } />
         )
     }
 }
