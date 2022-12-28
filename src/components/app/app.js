@@ -4,11 +4,13 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ItemList from '../item-list';
 import PersonDetails from '../person-details';
+import ErrorIndicator from "../error-indicator";
 
 export default class App extends Component {
     render() {
         return (
             <div className='app-wrapper'>
+                <ErrorIndicator />
                 <Header/>
                 <RandomPlanet/>
 
