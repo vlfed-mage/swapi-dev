@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import ApiServices from "../../api-services";
+import ApiServices from '../../api-services';
 
-import LoaderIndicator from "../loader-indicator";
-import RandomPlanetView from "../random-planet-view";
-import ErrorIndicator from "../error-indicator";
+import LoaderIndicator from '../loader-indicator';
+import RandomPlanetView from '../random-planet-view';
+import ErrorIndicator from '../error-indicator';
 
 export default class RandomPlanet extends Component {
 
@@ -60,7 +60,7 @@ export default class RandomPlanet extends Component {
         const { planet, loading, error } = this.state;
 
         return (
-            <div className="random-planet jumbotron rounded">
+            <div className='random-planet jumbotron rounded'>
                 {
                     loading
                         ? <LoaderIndicator />

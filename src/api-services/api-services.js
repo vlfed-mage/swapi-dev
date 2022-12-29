@@ -26,6 +26,7 @@ export default class ApiServices {
             population: planet.population,
             rotationPeriod: planet.rotation_period,
             diameter: planet.diameter,
+            selected: false
         }
     }
 
@@ -36,6 +37,7 @@ export default class ApiServices {
             gender: person.gender,
             birthYear: person.birth_year,
             eyeColor: person.eye_color,
+            selected: false
         }
     }
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import ApiServices from "../../api-services";
+import ApiServices from '../../api-services';
 
-import LoaderIndicator from "../loader-indicator";
-import ErrorIndicator from "../error-indicator";
+import LoaderIndicator from '../loader-indicator';
+import ErrorIndicator from '../error-indicator';
 
 export default class ItemList extends Component {
 
@@ -22,8 +22,10 @@ export default class ItemList extends Component {
     }
 
     onPeopleLoaded = (people) => {
+        const { selectedPersonId } = this.props;
+
         this.setState({
-            people,
+            people: this._transformItemList(people, selectedPersonId),
             loading: false
         })
     }
@@ -35,12 +37,29 @@ export default class ItemList extends Component {
         })
     }
 
+    onItemClick(id) {
+        this.props.onListItemSelected(id);
+
+        this.setState(({ people }) => {
+            return {
+                people: this._transformItemList(people, id),
+            }
+        })
+    }
+
+    _transformItemList(arr, id) {
+        return arr.map((el) => {
+            return { ...el, selected: id === el.id }
+        })
+    }
+
     renderPeopleList = (people) => {
-        return people.map(({ name, id }) => {
+        return people.map(({ name, id, selected }) => {
+            const classNames = selected ? 'list-group-item selected' : 'list-group-item'
             return (
                 <li
-                    className="list-group-item"
-                    onClick={ () => this.props.onListItemSelected(id) }
+                    className={ classNames }
+                    onClick={ () => this.onItemClick(id) }
                     key={ id } >
                     { name }
                 </li>
@@ -56,7 +75,7 @@ export default class ItemList extends Component {
                 ? <LoaderIndicator/>
                 : error
                     ? <ErrorIndicator />
-                    : <ul className="item-list list-group">
+                    : <ul className='item-list list-group'>
                           { this.renderPeopleList(people) }
                       </ul>
 
