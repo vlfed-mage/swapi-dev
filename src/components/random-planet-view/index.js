@@ -1,3 +1,3 @@
-import RandomPlanetView from "./random-planet-view";
+import RandomPlanetView from './random-planet-view';
 
 export default RandomPlanetView;

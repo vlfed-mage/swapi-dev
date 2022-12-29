@@ -4,12 +4,12 @@ import cover from '../../images/death-star.svg';
 
 const ErrorIndicator = () => {
     return (
-        <div className="error-indicator" >
+        <div className='error-indicator' >
             <img
                 src={ cover }
-                alt="error icon" />
+                alt='error icon' />
             <span
-                className="boom" >
+                className='boom' >
                 BOOM!
             </span>
             <span>something has gone terribly wrong</span>

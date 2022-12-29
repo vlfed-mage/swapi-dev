@@ -1,4 +1,4 @@
-import dumb from "../../images/death-star.svg";
+import dumb from '../../images/death-star.svg';
 
 export default class Helpers {
     onImageError = (e) => {

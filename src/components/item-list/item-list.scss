@@ -2,7 +2,8 @@
     .list-group-item {
         cursor: pointer;
 
-        &:hover {
+        &:hover,
+        &.selected {
             background-color: #444;
         }
     }

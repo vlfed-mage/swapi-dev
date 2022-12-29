@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import ApiServices from "../../api-services";
+import ApiServices from '../../api-services';
 
-import LoaderIndicator from "../loader-indicator";
-import PersonDetailsView from "../person-details-view";
-import ErrorIndicator from "../error-indicator";
+import LoaderIndicator from '../loader-indicator';
+import PersonDetailsView from '../person-details-view';
+import ErrorIndicator from '../error-indicator';
 
 export default class PersonDetails extends Component {
 
@@ -13,6 +13,10 @@ export default class PersonDetails extends Component {
         person: null,
         loading: true,
         error: false
+    }
+
+    componentDidMount() {
+        this.updatePerson(this.props.selectedPersonId);
     }
 
     componentDidUpdate(prevProps) {
@@ -50,10 +54,6 @@ export default class PersonDetails extends Component {
 
     render() {
         const { person, loading, error } = this.state;
-
-        if (!person && !error) {
-            return null;
-        }
 
         return (
             loading
