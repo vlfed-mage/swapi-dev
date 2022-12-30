@@ -9,28 +9,28 @@ export default class ItemList extends Component {
 
     apiServices = new ApiServices();
     state = {
-        people: null,
+        items: null,
         loading: true,
         error: false
     }
 
     componentDidMount() {
-        this.apiServices
-            .getCollection('people')
-            .then( this.onPeopleLoaded )
-            .catch( this.onPeopleError )
+        const { getData } = this.props;
+        getData()
+            .then( this.onItemsLoaded )
+            .catch( this.onItemsError )
     }
 
-    onPeopleLoaded = (people) => {
-        const { selectedPersonId } = this.props;
+    onItemsLoaded = (items) => {
+        const { selectedItemId } = this.props;
 
         this.setState({
-            people: this._transformItemList(people, selectedPersonId),
+            items: this._transformItemList(items, selectedItemId),
             loading: false
         })
     }
 
-    onPeopleError = () => {
+    onItemsError = () => {
         this.setState({
             loading: false,
             error: true
@@ -40,21 +40,21 @@ export default class ItemList extends Component {
     onItemClick(id) {
         this.props.onListItemSelected(id);
 
-        this.setState(({ people }) => {
+        this.setState(({ items }) => {
             return {
-                people: this._transformItemList(people, id),
+                items: this._transformItemList(items, id),
             }
         })
     }
 
     _transformItemList(arr, id) {
-        return arr.map((el) => {
-            return { ...el, selected: id === el.id }
-        })
+        return id
+            ? arr.map((el) => ({ ...el, selected: id === el.id }))
+            : arr;
     }
 
-    renderPeopleList = (people) => {
-        return people.map(({ name, id, selected }) => {
+    renderItemsList = (items) => {
+        return items.map(({ name, id, selected }) => {
             const classNames = selected ? 'list-group-item selected' : 'list-group-item'
             return (
                 <li
@@ -68,7 +68,7 @@ export default class ItemList extends Component {
     }
 
     render() {
-        const { loading, error, people } = this.state;
+        const { loading, error, items } = this.state;
 
         return (
             loading
@@ -76,7 +76,7 @@ export default class ItemList extends Component {
                 : error
                     ? <ErrorIndicator />
                     : <ul className='item-list list-group'>
-                          { this.renderPeopleList(people) }
+                          { this.renderItemsList(items) }
                       </ul>
 
         );

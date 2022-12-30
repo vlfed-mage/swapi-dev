@@ -16,14 +16,14 @@ export default class PersonDetails extends Component {
     }
 
     componentDidMount() {
-        this.updatePerson(this.props.selectedPersonId);
+        this.updatePerson(this.props.selectedItemId);
     }
 
     componentDidUpdate(prevProps) {
-        const { selectedPersonId } = this.props;
+        const { selectedItemId } = this.props;
 
-        if (selectedPersonId !== prevProps.selectedPersonId) {
-            this.updatePerson(selectedPersonId)
+        if (selectedItemId !== prevProps.selectedItemId) {
+            this.updatePerson(selectedItemId)
         }
     }
 
@@ -54,6 +54,10 @@ export default class PersonDetails extends Component {
 
     render() {
         const { person, loading, error } = this.state;
+
+        if (!person) {
+            return null;
+        }
 
         return (
             loading

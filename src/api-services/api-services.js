@@ -41,6 +41,17 @@ export default class ApiServices {
         }
     }
 
+    _transformStarship = (starship) => {
+        return {
+            id: this._extractId(starship.url),
+            name: starship.name,
+            manufacturer: starship.manufacturer,
+            passengers: starship.passengers,
+            starshipClass: starship.starship_class,
+            selected: false
+        }
+    }
+
     async getCollection(name) {
         const collection = await this._getData(name);
         switch (name) {
@@ -48,6 +59,8 @@ export default class ApiServices {
                 return collection.results.map(this._transformPlanet);
             case 'people':
                 return collection.results.map(this._transformPerson)
+            case 'starships':
+                return collection.results.map(this._transformStarship)
             default:
                 return collection.results;
         }
@@ -60,6 +73,8 @@ export default class ApiServices {
                 return this._transformPlanet(item);
             case 'people':
                 return this._transformPerson(item)
+            case 'starships':
+                return this._transformStarship(item)
             default:
                 return item;
         }
