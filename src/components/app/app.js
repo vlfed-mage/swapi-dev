@@ -1,18 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+import ApiServices from '../../api-services';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from "../people-page";
+import Row from "../row";
+import ItemList from "../item-list";
+import PersonDetails from "../person-details";
 
-const App = () => {
-    return (
-        <div className='app-wrapper'>
-            <Header/>
-            <RandomPlanet/>
+export default class App extends Component {
 
-            <PeoplePage />
-        </div>
-    );
-};
+    apiServices = new ApiServices();
 
-export default App;
+    state = {
+        selectedItemId: '1'
+    }
+
+    getData = (name) => {
+        return this.apiServices.getCollection(name)
+    }
+
+    onListItemSelected = (id) => {
+        this.setState({
+            selectedItemId: id
+        })
+    }
+
+    render() {
+        const { selectedItemId } = this.state;
+
+        const itemList = (name) => {
+            return (
+                <ItemList
+                    getData={ () => this.getData(name) }
+                    selectedItemId={ selectedItemId }
+                    onListItemSelected={ this.onListItemSelected } />
+            )
+        }
+
+        return (
+            <div className='app-wrapper'>
+                <Header/>
+                <RandomPlanet/>
+
+                <Row
+                    left={ itemList('people') }
+                    right={
+                        <PersonDetails
+                            selectedItemId={ selectedItemId } />
+                    }
+                />
+                <Row
+                    left={ itemList('planets') }
+                    right={
+                        <PersonDetails
+                            selectedItemId={ selectedItemId } />
+                    }
+                />
+                <Row
+                    left={ itemList('starships') }
+                    right={
+                        <PersonDetails
+                            selectedItemId={ selectedItemId } />
+                    }
+                />
+            </div>
+        );
+    }
+}
