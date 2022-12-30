@@ -11,7 +11,7 @@ import PersonDetails from "../person-details";
 export default class App extends Component {
 
     apiServices = new ApiServices();
-
+    pages = ['people', 'planets', 'starships'];
     state = {
         selectedItemId: '1'
     }
@@ -38,32 +38,21 @@ export default class App extends Component {
             )
         }
 
+        const rowElements = this.pages.map((page) => {
+            return (
+                <Row key={ page }>
+                    { itemList(page) }
+                    <PersonDetails
+                        selectedItemId={ selectedItemId } />
+                </Row>
+            )
+        })
+
         return (
             <div className='app-wrapper'>
                 <Header/>
                 <RandomPlanet/>
-
-                <Row
-                    left={ itemList('people') }
-                    right={
-                        <PersonDetails
-                            selectedItemId={ selectedItemId } />
-                    }
-                />
-                <Row
-                    left={ itemList('planets') }
-                    right={
-                        <PersonDetails
-                            selectedItemId={ selectedItemId } />
-                    }
-                />
-                <Row
-                    left={ itemList('starships') }
-                    right={
-                        <PersonDetails
-                            selectedItemId={ selectedItemId } />
-                    }
-                />
+                { rowElements }
             </div>
         );
     }

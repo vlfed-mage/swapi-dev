@@ -1,16 +1,19 @@
 import React from 'react';
 
-import PersonDetails from '../person-details';
+const Row = (props) => {
+    const elements = props.children.map((el, idx) => {
+        return (
+            <div
+                key={ idx }
+                className='col-md-6'>
+                { el }
+            </div>
+        )
+    });
 
-const Row = ({ left, right }) => {
     return (
         <div className='row mb2'>
-            <div className='col-md-6'>
-                { left }
-            </div>
-            <div className='col-md-6'>
-                { right }
-            </div>
+            { elements }
         </div>
     )
 }
