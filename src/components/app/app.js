@@ -6,12 +6,12 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import Row from "../row";
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 
 export default class App extends Component {
 
     apiServices = new ApiServices();
-    pages = ['people', 'planets', 'starships'];
+    pages = [ 'people', 'planets', 'starships' ];
     state = {
         selectedItemId: '1'
     }
@@ -42,7 +42,7 @@ export default class App extends Component {
             return (
                 <Row key={ page }>
                     { itemList(page) }
-                    <PersonDetails
+                    <ItemDetails
                         selectedItemId={ selectedItemId } />
                 </Row>
             )
@@ -50,8 +50,8 @@ export default class App extends Component {
 
         return (
             <div className='app-wrapper'>
-                <Header/>
-                <RandomPlanet/>
+                <Header />
+                <RandomPlanet />
                 { rowElements }
             </div>
         );

@@ -3,59 +3,59 @@ import React, { Component } from 'react';
 import ApiServices from '../../api-services';
 
 import LoaderIndicator from '../loader-indicator';
-import PersonDetailsView from '../person-details-view';
+import ItemDetailsView from '../item-details-view';
 import ErrorIndicator from '../error-indicator';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
     apiServices = new ApiServices();
     state = {
-        person: null,
+        details: null,
         loading: true,
         error: false
     }
 
     componentDidMount() {
-        this.updatePerson(this.props.selectedItemId);
+        this.updateDetails(this.props.selectedItemId);
     }
 
     componentDidUpdate(prevProps) {
         const { selectedItemId } = this.props;
 
         if (selectedItemId !== prevProps.selectedItemId) {
-            this.updatePerson(selectedItemId)
+            this.updateDetails(selectedItemId)
         }
     }
 
-    onPersonLoaded = (person) => {
+    onDetailsLoaded = (details) => {
         this.setState({
-            person,
+            details,
             loading: false
         })
     }
 
-    onPersonError = () => {
+    onDetailsError = () => {
         this.setState({
             loading: false,
             error: true
         })
     }
 
-    updatePerson = (id) => {
+    updateDetails = (id) => {
         this.setState({
             loading: true,
             error: false
         })
         this.apiServices
             .getItem('people', id)
-            .then( this.onPersonLoaded )
-            .catch( this.onPersonError )
+            .then( this.onDetailsLoaded )
+            .catch( this.onDetailsError )
     }
 
     render() {
-        const { person, loading, error } = this.state;
+        const { details, loading, error } = this.state;
 
-        if (!person) {
+        if (!details) {
             return null;
         }
 
@@ -64,8 +64,8 @@ export default class PersonDetails extends Component {
                 ? <LoaderIndicator />
                 : error
                     ? <ErrorIndicator />
-                    : <PersonDetailsView
-                        person={ person } />
+                    : <ItemDetailsView
+                        details={ details } />
         )
     }
 }
