@@ -2,14 +2,14 @@ import React from 'react';
 
 import Helpers from '../helpers';
 
-const PersonDetailsView = ({ person }) => {
+const ItemDetailsView = ({ details }) => {
     const helpers = new Helpers();
 
-    const { id, name, gender, birthYear, eyeColor } = person;
+    const { id, name, gender, birthYear, eyeColor } = details;
 
     return (
-        <div className='person-details card' >
-            <img className='person-image'
+        <div className='item-details card' >
+            <img className='item-image'
                  src= { `https://starwars-visualguide.com/assets/img/characters/${ id }.jpg` }
                  onError={ helpers.onImageError } />
 
@@ -34,4 +34,4 @@ const PersonDetailsView = ({ person }) => {
     )
 }
 
-export default PersonDetailsView;
+export default ItemDetailsView;
