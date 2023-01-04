@@ -54,7 +54,7 @@ export default class ItemList extends Component {
     renderItemsList = (items) => {
         return items.map((item) => {
             const { id, selected } = item,
-                  label = this.props.renderItem(item),
+                  label = this.props.children(item), // can be any of types, including function
                   classNames = selected ? 'list-group-item selected' : 'list-group-item';
 
             return (
