@@ -42,12 +42,13 @@ export default class ItemDetails extends Component {
     }
 
     updateDetails = (id) => {
+        const { name } = this.props;
         this.setState({
             loading: true,
             error: false
         })
         this.apiServices
-            .getItem('people', id)
+            .getItem(name, id)
             .then( this.onDetailsLoaded )
             .catch( this.onDetailsError )
     }
