@@ -6,9 +6,10 @@ import Row from "../row";
 import ApiServices from "../../api-services";
 
 export default class PlanetPage extends Component {
+    _pageName = 'planets'
     apiServices = new ApiServices();
     state = {
-        selectedItemId: '2'
+        selectedItemId: '11'
     }
 
     getData = (name) => {
@@ -23,18 +24,20 @@ export default class PlanetPage extends Component {
 
     render() {
         const { selectedItemId } = this.state;
-        const name = 'planets';
 
         return (
             <Row >
                 <ItemList
-                    name={ name }
+                    name={ this._pageName }
                     getData={ this.getData }
                     selectedItemId={ selectedItemId }
-                    onListItemSelected={ this.onListItemSelected }
-                    renderItem={ ({ name, rotationPeriod }) => `${ name } (${ rotationPeriod })` } />
+                    onListItemSelected={ this.onListItemSelected } >
+                    {
+                        (i) => `${ i.name } (${ i.rotationPeriod })`
+                    }
+                </ItemList>
                 <ItemDetails
-                    name={ name }
+                    name={ this._pageName }
                     selectedItemId={ selectedItemId } />
             </Row>
         )

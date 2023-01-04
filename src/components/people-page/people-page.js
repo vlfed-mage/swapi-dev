@@ -6,6 +6,7 @@ import Row from "../row";
 import ApiServices from "../../api-services";
 
 export default class PeoplePage extends Component {
+    _pageName = 'people'
     apiServices = new ApiServices();
     state = {
         selectedItemId: '1'
@@ -23,18 +24,20 @@ export default class PeoplePage extends Component {
 
     render() {
         const { selectedItemId } = this.state;
-        const name = 'people';
 
         return (
             <Row >
                 <ItemList
-                    name={ name }
+                    name={ this._pageName }
                     getData={ this.getData }
                     selectedItemId={ selectedItemId }
-                    onListItemSelected={ this.onListItemSelected }
-                    renderItem={ ({ name, gender, birthYear }) => `${ name } (${ gender }, ${ birthYear })` } />
+                    onListItemSelected={ this.onListItemSelected } >
+                    {
+                        (i) => `${ i.name } (${ i.gender }, ${ i.birthYear })`
+                    }
+                </ItemList>
                 <ItemDetails
-                    name={ name }
+                    name={ this._pageName }
                     selectedItemId={ selectedItemId } />
             </Row>
         )
