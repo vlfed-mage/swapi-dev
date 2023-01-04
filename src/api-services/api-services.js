@@ -52,7 +52,7 @@ export default class ApiServices {
         }
     }
 
-    async getCollection(name) {
+    getCollection = async (name) => {
         const collection = await this._getData(name);
         switch (name) {
             case 'planets':
@@ -66,7 +66,7 @@ export default class ApiServices {
         }
     }
 
-    async getItem(name, id) {
+    getItem = async (name, id) => {
         const item = await this._getData(name, id);
         switch (name) {
             case 'planets':

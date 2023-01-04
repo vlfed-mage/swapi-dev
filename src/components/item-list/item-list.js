@@ -15,8 +15,8 @@ export default class ItemList extends Component {
     }
 
     componentDidMount() {
-        const { getData } = this.props;
-        getData()
+        const { getData, name } = this.props;
+        getData(name)
             .then( this.onItemsLoaded )
             .catch( this.onItemsError )
     }
@@ -48,20 +48,21 @@ export default class ItemList extends Component {
     }
 
     _transformItemList(arr, id) {
-        return id
-            ? arr.map((el) => ({ ...el, selected: id === el.id }))
-            : arr;
+        return arr.map((el) => ({ ...el, selected: id === el.id }));
     }
 
     renderItemsList = (items) => {
-        return items.map(({ name, id, selected }) => {
-            const classNames = selected ? 'list-group-item selected' : 'list-group-item'
+        return items.map((item) => {
+            const { id, selected } = item,
+                  label = this.props.renderItem(item),
+                  classNames = selected ? 'list-group-item selected' : 'list-group-item';
+
             return (
                 <li
                     className={ classNames }
                     onClick={ () => this.onItemClick(id) }
                     key={ id } >
-                    { name }
+                    { label }
                 </li>
             )
         })
