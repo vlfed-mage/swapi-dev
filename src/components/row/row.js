@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { Children } from 'react';
 
 const Row = (props) => {
-    const elements = props.children.map((el, idx) => {
+    const elements = Children.map(props.children, (el) => {
         return (
-            <div
-                key={ idx }
-                className='col-md-6'>
-                { el }
-            </div>
+            <div className='col-md-6'> { el } </div>
         )
     });
 
@@ -15,7 +11,7 @@ const Row = (props) => {
         <div className='row mb2'>
             { elements }
         </div>
-    )
+    );
 }
 
 export default Row;

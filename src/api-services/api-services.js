@@ -1,6 +1,7 @@
 export default class ApiServices {
 
     _bodyUrl = 'https://swapi.dev/api/';
+    _bodyImgUrl = 'https://starwars-visualguide.com/assets/img/';
 
     async _getData(name, id = '') {
         const data = await fetch(`${this._bodyUrl}${name}/${id}`);
@@ -52,6 +53,15 @@ export default class ApiServices {
         }
     }
 
+    _transformPageNameToCategory = (name) => {
+        switch (name) {
+            case 'people':
+                return 'characters'
+            default:
+                return name;
+        }
+    }
+
     getCollection = async (name) => {
         const collection = await this._getData(name);
         switch (name) {
@@ -78,5 +88,10 @@ export default class ApiServices {
             default:
                 return item;
         }
+    }
+
+    getImgUrl = (name, id) => {
+        const category = this._transformPageNameToCategory(name);
+        return `${ this._bodyImgUrl }${ category }/${ id }.jpg`
     }
 }

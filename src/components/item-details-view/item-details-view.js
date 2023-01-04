@@ -1,16 +1,18 @@
 import React from 'react';
 
 import Helpers from '../helpers';
+import ApiServices from "../../api-services";
 
-const ItemDetailsView = ({ details }) => {
-    const helpers = new Helpers();
+const ItemDetailsView = ({ details, category }) => {
+    const helpers = new Helpers(),
+          apiServices = new ApiServices();
 
     const { id, name, gender, birthYear, eyeColor } = details;
 
     return (
         <div className='item-details card' >
             <img className='item-image'
-                 src= { `https://starwars-visualguide.com/assets/img/characters/${ id }.jpg` }
+                 src={ apiServices.getImgUrl(category, id) }
                  onError={ helpers.onImageError } />
 
             <div className='card-body' >

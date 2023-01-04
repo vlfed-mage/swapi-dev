@@ -5,6 +5,15 @@ import ItemDetails from "../item-details";
 import Row from "../row";
 import ApiServices from "../../api-services";
 
+const Feature = ({ details, field, label }) => {
+    return (
+        <li className='list-group-item' >
+            <span className='term'>{ `${ label }: ` }</span>
+            <span>{ details[field] }</span>
+        </li>
+    )
+}
+
 export default class PeoplePage extends Component {
     _pageName = 'people'
     apiServices = new ApiServices();
@@ -12,8 +21,9 @@ export default class PeoplePage extends Component {
         selectedItemId: '1'
     }
 
-    getData = (name) => {
-        return this.apiServices.getCollection(name)
+    getData = (name, id = null) => {
+        const { getItem, getCollection } = this.apiServices;
+        return id ? getItem(name, id) : getCollection(name);
     }
 
     onListItemSelected = (id) => {
@@ -38,7 +48,14 @@ export default class PeoplePage extends Component {
                 </ItemList>
                 <ItemDetails
                     name={ this._pageName }
-                    selectedItemId={ selectedItemId } />
+                    getData={ this.getData }
+                    selectedItemId={ selectedItemId } >
+
+                    <Feature label='Gender' field='gender'/>
+                    <Feature label='Birth Year' field='birthYear'/>
+                    <Feature label='Eye Color' field='eyeColor'/>
+
+                </ItemDetails>
             </Row>
         )
     }
