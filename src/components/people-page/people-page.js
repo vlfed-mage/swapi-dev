@@ -3,31 +3,26 @@ import React, { Component } from "react";
 import ItemList from "../item-list";
 import ItemDetails from "../item-details";
 import Row from "../row";
-import ApiServices from "../../api-services";
 import { withData } from "../hoc-helper";
 import ErrorBoundary from "../error-boundary";
 
-const Feature = ({ details, field, label }) => {
+
+const Feature = ({ data, field, label }) => {
     return (
         <li className='list-group-item' >
             <span className='term'>{ `${ label }: ` }</span>
-            <span>{ details[field] }</span>
+            <span>{ data[field] }</span>
         </li>
     )
 }
 
 const PeopleList = withData(ItemList, 'people');
+const PersonDetails = withData(ItemDetails, 'people', true);
 
 export default class PeoplePage extends Component {
     _pageName = 'people'
-    apiServices = new ApiServices();
     state = {
-        selectedItemId: '1'
-    }
-
-    getData = (name, id = null) => {
-        const { getItem, getCollection } = this.apiServices;
-        return id ? getItem(name, id) : getCollection(name);
+        selectedItemId: '11'
     }
 
     onListItemSelected = (id) => {
@@ -48,16 +43,14 @@ export default class PeoplePage extends Component {
                 </ErrorBoundary>
 
                 <ErrorBoundary >
-                    <ItemDetails
+                    <PersonDetails
                         name={ this._pageName }
-                        getData={ this.getData }
                         selectedItemId={ selectedItemId } >
 
                         <Feature label='Gender' field='gender'/>
                         <Feature label='Birth Year' field='birthYear'/>
                         <Feature label='Eye Color' field='eyeColor'/>
-
-                    </ItemDetails>
+                    </PersonDetails>
                 </ErrorBoundary>
             </Row>
         )
