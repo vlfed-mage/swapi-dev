@@ -6,6 +6,7 @@ import ApiServices from "../../api-services";
 
 const withData = (View, name, id = null) => {
     return class extends Component {
+
         apiServices = new ApiServices();
         state = {
             data: null,
@@ -15,7 +16,9 @@ const withData = (View, name, id = null) => {
 
         getData = () => {
             const { getItem, getCollection } = this.apiServices;
-            return id ? getItem(name, id) : getCollection(name);
+            return id
+                ? getItem(name, this.props.selectedItemId)
+                : getCollection(name);
         }
 
         onDataLoaded = (data) => {
@@ -32,18 +35,30 @@ const withData = (View, name, id = null) => {
             })
         }
 
+        onDataReset = () => {
+            this.setState({
+                loading: true,
+                error: false
+            })
+        }
+
         componentDidMount() {
             this.getData()
                 .then( this.onDataLoaded )
                 .catch( this.onDataError )
         }
 
+        componentDidUpdate(prevProps) {
+            if (this.props.selectedItemId !== prevProps.selectedItemId) {
+                this.onDataReset()
+                this.getData()
+                    .then( this.onDataLoaded )
+                    .catch( this.onDataError )
+            }
+        }
+
         render() {
             const { data, error, loading } = this.state;
-
-            if (!data) {
-                return <LoaderIndicator />
-            }
 
             return (
                 loading
