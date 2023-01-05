@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <div className='header d-flex'>
+        <header className='header d-flex'>
             <h3>
                 <a href='#'>
                     Star DB
@@ -19,7 +19,7 @@ const Header = () => {
                     <a href='#'>Starships</a>
                 </li>
             </ul>
-        </div>
+        </header>
     );
 };
 

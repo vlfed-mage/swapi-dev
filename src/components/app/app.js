@@ -4,7 +4,6 @@ import Header from '../header';
 import RandomPlanet from '../random-planet';
 import PeoplePage from "../people-page";
 import PlanetPage from "../planet-page";
-import ErrorBoundary from "../error-boundary";
 
 const App = () => {
     return (
@@ -12,14 +11,8 @@ const App = () => {
             <Header />
             <RandomPlanet />
 
-            <ErrorBoundary >
-                <PeoplePage />
-            </ErrorBoundary>
-
-            <ErrorBoundary >
-                <PlanetPage />
-            </ErrorBoundary>
-
+            <PeoplePage />
+            <PlanetPage />
         </div>
     );
 }

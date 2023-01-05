@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
 
     render() {
         if(this.state.hasError) {
-            console.log(`ErrorBoundary catch an error: ${this.state.errorInfo.componentStack}`)
+            console.log(`ErrorBoundary caught an error: ${this.state.errorInfo.componentStack}`)
             return <ErrorIndicator />
         }
 
