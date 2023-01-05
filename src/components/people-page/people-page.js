@@ -4,6 +4,8 @@ import ItemList from "../item-list";
 import ItemDetails from "../item-details";
 import Row from "../row";
 import ApiServices from "../../api-services";
+import { withData } from "../hoc-helper";
+import ErrorBoundary from "../error-boundary";
 
 const Feature = ({ details, field, label }) => {
     return (
@@ -13,6 +15,8 @@ const Feature = ({ details, field, label }) => {
         </li>
     )
 }
+
+const PeopleList = withData(ItemList, 'people');
 
 export default class PeoplePage extends Component {
     _pageName = 'people'
@@ -37,25 +41,24 @@ export default class PeoplePage extends Component {
 
         return (
             <Row >
-                <ItemList
-                    name={ this._pageName }
-                    getData={ this.getData }
-                    selectedItemId={ selectedItemId }
-                    onListItemSelected={ this.onListItemSelected } >
-                    {
-                        (i) => `${ i.name } (${ i.gender }, ${ i.birthYear })`
-                    }
-                </ItemList>
-                <ItemDetails
-                    name={ this._pageName }
-                    getData={ this.getData }
-                    selectedItemId={ selectedItemId } >
+                <ErrorBoundary >
+                    <PeopleList onListItemSelected={ this.onListItemSelected }>
+                        { (i) => `${ i.name } (${ i.gender }, ${ i.birthYear })`}
+                    </PeopleList>
+                </ErrorBoundary>
 
-                    <Feature label='Gender' field='gender'/>
-                    <Feature label='Birth Year' field='birthYear'/>
-                    <Feature label='Eye Color' field='eyeColor'/>
+                <ErrorBoundary >
+                    <ItemDetails
+                        name={ this._pageName }
+                        getData={ this.getData }
+                        selectedItemId={ selectedItemId } >
 
-                </ItemDetails>
+                        <Feature label='Gender' field='gender'/>
+                        <Feature label='Birth Year' field='birthYear'/>
+                        <Feature label='Eye Color' field='eyeColor'/>
+
+                    </ItemDetails>
+                </ErrorBoundary>
             </Row>
         )
     }

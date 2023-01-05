@@ -1,66 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import ApiServices from '../../api-services';
+const ItemList = (props) => {
+    const {onListItemSelected, data, children: renderItems} = props;
 
-import LoaderIndicator from '../loader-indicator';
-import ErrorIndicator from '../error-indicator';
-
-export default class ItemList extends Component {
-
-    apiServices = new ApiServices();
-    state = {
-        items: null,
-        loading: true,
-        error: false
+    const onItemClick = (id) => {
+        onListItemSelected(id);
     }
 
-    componentDidMount() {
-        const { getData, name } = this.props;
-        getData(name)
-            .then( this.onItemsLoaded )
-            .catch( this.onItemsError )
-    }
-
-    onItemsLoaded = (items) => {
-        const { selectedItemId } = this.props;
-
-        this.setState({
-            items: this._transformItemList(items, selectedItemId),
-            loading: false
-        })
-    }
-
-    onItemsError = () => {
-        this.setState({
-            loading: false,
-            error: true
-        })
-    }
-
-    onItemClick(id) {
-        this.props.onListItemSelected(id);
-
-        this.setState(({ items }) => {
-            return {
-                items: this._transformItemList(items, id),
-            }
-        })
-    }
-
-    _transformItemList(arr, id) {
-        return arr.map((el) => ({ ...el, selected: id === el.id }));
-    }
-
-    renderItemsList = (items) => {
-        return items.map((item) => {
+    const renderItemsList = (data) => {
+        return data.map((item) => {
             const { id, selected } = item,
-                  label = this.props.children(item), // can be any of type, including function
-                  classNames = selected ? 'list-group-item selected' : 'list-group-item';
+                label = renderItems(item), // can be any of type, including function
+                classNames = selected ? 'list-group-item selected' : 'list-group-item';
 
             return (
                 <li
                     className={ classNames }
-                    onClick={ () => this.onItemClick(id) }
+                    onClick={ () => onItemClick(id) }
                     key={ id } >
                     { label }
                 </li>
@@ -68,18 +24,11 @@ export default class ItemList extends Component {
         })
     }
 
-    render() {
-        const { loading, error, items } = this.state;
-
-        return (
-            loading
-                ? <LoaderIndicator/>
-                : error
-                    ? <ErrorIndicator />
-                    : <ul className='item-list list-group'>
-                          { this.renderItemsList(items) }
-                      </ul>
-
-        );
-    }
+    return (
+        <ul className='item-list list-group'>
+            { renderItemsList(data) }
+        </ul>
+    );
 }
+
+export default ItemList;
