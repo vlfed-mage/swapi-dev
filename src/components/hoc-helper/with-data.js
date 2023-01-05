@@ -4,10 +4,9 @@ import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
 import ApiServices from "../../api-services";
 
-const withData = (View, name, id = null) => {
+const withData = (View, name, withId = false) => {
     return class extends Component {
 
-        apiServices = new ApiServices();
         state = {
             data: null,
             loading: true,
@@ -15,8 +14,8 @@ const withData = (View, name, id = null) => {
         }
 
         getData = () => {
-            const { getItem, getCollection } = this.apiServices;
-            return id
+            const { getItem, getCollection } = new ApiServices();
+            return withId
                 ? getItem(name, this.props.selectedItemId)
                 : getCollection(name);
         }
