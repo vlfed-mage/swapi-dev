@@ -1,4 +1,4 @@
-import React, { Component, Children, cloneElement, } from 'react';
+import React, { Component, Children, cloneElement } from 'react';
 
 import ApiServices from '../../api-services';
 
@@ -75,9 +75,10 @@ export default class ItemDetails extends Component {
                         <div className='card-body' >
                             <h4>{ name }</h4>
                             <ul className='list-group list-group-flush' >
-                                { Children.map(this.props.children, (child) => {
-                                    return cloneElement(child, { details })
-                                }) }
+                                { Children.map(
+                                    this.props.children,
+                                    (child) => cloneElement(child, { details })
+                                ) }
                             </ul>
                         </div>
                     </div>
