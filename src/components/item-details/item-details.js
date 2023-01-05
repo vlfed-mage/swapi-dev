@@ -1,11 +1,9 @@
 import React, { Children, cloneElement } from 'react';
 
 import ApiServices from '../../api-services';
-import Helpers from "../helpers";
 
 const ItemDetails = (props) => {
-    const helpers = new Helpers(),
-          apiServices = new ApiServices(),
+    const { getImgUrl, onImageError } = new ApiServices(),
           { data } = props;
 
     if (!data) {
@@ -17,8 +15,8 @@ const ItemDetails = (props) => {
     return (
         <div className='item-details card' >
             <img className='item-image'
-                 src={ apiServices.getImgUrl(props.name, id) }
-                 onError={ helpers.onImageError }
+                 src={ getImgUrl(props.name, id) }
+                 onError={ onImageError }
                  alt='item details image' />
 
             <div className='card-body' >

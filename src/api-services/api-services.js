@@ -1,3 +1,5 @@
+import dumb from "../images/death-star.svg";
+
 export default class ApiServices {
 
     _bodyUrl = 'https://swapi.dev/api/';
@@ -93,5 +95,9 @@ export default class ApiServices {
     getImgUrl = (name, id) => {
         const category = this._transformPageNameToCategory(name);
         return `${ this._bodyImgUrl }${ category }/${ id }.jpg`
+    }
+
+    onImageError = (e) => {
+        e.target.src = dumb;
     }
 }

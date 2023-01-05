@@ -1,17 +1,18 @@
 import React, { Fragment } from 'react';
 
-import Helpers from '../helpers';
+import ApiServices from "../../api-services";
 
-const RandomPlanetView = ({ planet }) => {
-    const helpers = new Helpers();
+const RandomPlanetView = (props) => {
+    const { getImgUrl, onImageError } = new ApiServices();
 
-    const { id, name, population, rotationPeriod, diameter } = planet;
+    const { id, name, population, rotationPeriod, diameter } = props.planet;
 
     return (
         <Fragment>
             <img className='planet-image'
-                 src={ `https://starwars-visualguide.com/assets/img/planets/${ id }.jpg` }
-                 onError={ helpers.onImageError } />
+                 src={ getImgUrl(props.name, id) }
+                 onError={ onImageError }
+                 alt='random planet image' />
             <div>
                 <h4>{ name }</h4>
                 <ul className='list-group list-group-flush'>

@@ -7,7 +7,7 @@ import RandomPlanetView from '../random-planet-view';
 import ErrorIndicator from '../error-indicator';
 
 export default class RandomPlanet extends Component {
-
+    _categoryName = 'planets'
     apiServices = new ApiServices();
     state = {
         planet: null,
@@ -67,6 +67,7 @@ export default class RandomPlanet extends Component {
                         : error
                             ? <ErrorIndicator />
                             : <RandomPlanetView
+                                name={ this._categoryName }
                                 planet={ planet } />
 
                 }
