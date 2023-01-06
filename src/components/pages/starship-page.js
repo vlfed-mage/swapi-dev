@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { PeopleList, PersonDetails, Feature } from "../sw-components";
+import { StarshipList, StarshipDetails, Feature } from "../sw-components";
 
-export default class PeoplePage extends Component {
-    _pageName = 'people'
+class StarshipPage extends Component {
+    _pageName = 'starships'
     state = {
         selectedItemId: '11'
     }
@@ -22,20 +22,24 @@ export default class PeoplePage extends Component {
         return (
             <Row >
                 <ErrorBoundary >
-                    <PeopleList onListItemSelected={ this.onListItemSelected } />
+                    <StarshipList onListItemSelected={ this.onListItemSelected } />
                 </ErrorBoundary>
 
                 <ErrorBoundary >
-                    <PersonDetails
+                    <StarshipDetails
                         name={ this._pageName }
                         selectedItemId={ selectedItemId } >
 
-                        <Feature label='Gender' field='gender'/>
-                        <Feature label='Birth Year' field='birthYear'/>
-                        <Feature label='Eye Color' field='eyeColor'/>
-                    </PersonDetails>
+                        <Feature label='Manufacturer' field='manufacturer'/>
+                        <Feature label='Passengers' field='passengers'/>
+                        <Feature label='Starship class' field='starshipClass'/>
+                    </StarshipDetails>
                 </ErrorBoundary>
             </Row>
         )
     }
-};
+}
+
+export {
+    StarshipPage
+}

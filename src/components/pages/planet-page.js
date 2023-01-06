@@ -4,7 +4,7 @@ import Row from "../row";
 import ErrorBoundary from "../error-boundary";
 import { PlanetList, PlanetDetails, Feature } from "../sw-components";
 
-export default class PlanetPage extends Component {
+class PlanetPage extends Component {
     _pageName = 'planets'
     state = {
         selectedItemId: '2'
@@ -38,4 +38,8 @@ export default class PlanetPage extends Component {
             </Row>
         )
     }
-};
+}
+
+export {
+    PlanetPage
+}
