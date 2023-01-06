@@ -1,22 +1,8 @@
 import React, { Component } from "react";
 
-import ItemList from "../item-list";
-import ItemDetails from "../item-details";
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { withData } from "../hoc-helper";
-
-const Feature = ({ data, field, label }) => {
-    return (
-        <li className='list-group-item' >
-            <span className='term'>{ `${ label }: ` }</span>
-            <span>{ data[field] }</span>
-        </li>
-    )
-}
-
-const PlanetList = withData(ItemList, 'planets');
-const PlanetDetails = withData(ItemDetails, 'planets', true);
+import { PlanetList, PlanetDetails, Feature } from "../sw-components";
 
 export default class PlanetPage extends Component {
     _pageName = 'planets'
@@ -36,9 +22,7 @@ export default class PlanetPage extends Component {
         return (
             <Row >
                 <ErrorBoundary>
-                    <PlanetList onListItemSelected={ this.onListItemSelected } >
-                        { (i) => `${ i.name } (${ i.rotationPeriod })` }
-                    </PlanetList>
+                    <PlanetList onListItemSelected={ this.onListItemSelected } />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <PlanetDetails

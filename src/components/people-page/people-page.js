@@ -1,23 +1,8 @@
 import React, { Component } from "react";
 
-import ItemList from "../item-list";
-import ItemDetails from "../item-details";
 import Row from "../row";
-import { withData } from "../hoc-helper";
 import ErrorBoundary from "../error-boundary";
-
-
-const Feature = ({ data, field, label }) => {
-    return (
-        <li className='list-group-item' >
-            <span className='term'>{ `${ label }: ` }</span>
-            <span>{ data[field] }</span>
-        </li>
-    )
-}
-
-const PeopleList = withData(ItemList, 'people');
-const PersonDetails = withData(ItemDetails, 'people', true);
+import { PeopleList, PersonDetails, Feature } from "../sw-components";
 
 export default class PeoplePage extends Component {
     _pageName = 'people'
@@ -37,9 +22,7 @@ export default class PeoplePage extends Component {
         return (
             <Row >
                 <ErrorBoundary >
-                    <PeopleList onListItemSelected={ this.onListItemSelected }>
-                        { (i) => `${ i.name } (${ i.gender }, ${ i.birthYear })`}
-                    </PeopleList>
+                    <PeopleList onListItemSelected={ this.onListItemSelected } />
                 </ErrorBoundary>
 
                 <ErrorBoundary >

@@ -1,7 +1,12 @@
 import {
     withData
-} from './with-data'
+} from './with-data';
+
+import {
+    withChildren
+} from './with-children';
 
 export {
-    withData
+    withData,
+    withChildren
 }
