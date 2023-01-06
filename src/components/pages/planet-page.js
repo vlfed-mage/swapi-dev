@@ -7,7 +7,7 @@ import { PlanetList, PlanetDetails, Feature } from "../sw-components";
 class PlanetPage extends Component {
     _pageName = 'planets'
     state = {
-        selectedItemId: '2'
+        selectedItemId: '11'
     }
 
     onListItemSelected = (id) => {
