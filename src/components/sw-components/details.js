@@ -7,6 +7,8 @@ const PersonDetails = withData(ItemDetails, 'people', true);
 
 const PlanetDetails = withData(ItemDetails, 'planets', true);
 
+const StarshipDetails = withData(ItemDetails, 'starships', true);
+
 const Feature = ({ data, field, label }) => {
     return (
         <li className='list-group-item' >
@@ -19,5 +21,6 @@ const Feature = ({ data, field, label }) => {
 export {
     PersonDetails,
     PlanetDetails,
+    StarshipDetails,
     Feature
 }

@@ -2,8 +2,7 @@ import React from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import PeoplePage from "../people-page";
-import PlanetPage from "../planet-page";
+import { PeoplePage, PlanetPage, StarshipPage } from "../pages";
 
 import ApiServices from "../../api-services";
 import { ApiServiceProvider } from "../sw-service-context";
@@ -19,6 +18,7 @@ const App = () => {
 
                 <PeoplePage />
                 <PlanetPage />
+                <StarshipPage />
             </ApiServiceProvider>
         </div>
     );
