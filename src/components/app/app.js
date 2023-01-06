@@ -5,14 +5,21 @@ import RandomPlanet from '../random-planet';
 import PeoplePage from "../people-page";
 import PlanetPage from "../planet-page";
 
+import ApiServices from "../../api-services";
+import { ApiServiceProvider } from "../sw-service-context";
+
 const App = () => {
+    const apiServices = new ApiServices();
+
     return (
         <div className='app-wrapper'>
-            <Header />
-            <RandomPlanet />
+            <ApiServiceProvider value={ apiServices }>
+                <Header />
+                <RandomPlanet />
 
-            <PeoplePage />
-            <PlanetPage />
+                <PeoplePage />
+                <PlanetPage />
+            </ApiServiceProvider>
         </div>
     );
 }

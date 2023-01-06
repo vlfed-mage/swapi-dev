@@ -6,7 +6,6 @@ import ApiServices from "../../api-services";
 
 const withData = (View, name, withId = false) => {
     return class extends Component {
-
         state = {
             data: null,
             loading: true,
