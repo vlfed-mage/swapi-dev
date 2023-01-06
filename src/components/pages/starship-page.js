@@ -7,7 +7,7 @@ import { StarshipList, StarshipDetails, Feature } from "../sw-components";
 class StarshipPage extends Component {
     _pageName = 'starships'
     state = {
-        selectedItemId: '11'
+        selectedItemId: '21'
     }
 
     onListItemSelected = (id) => {
