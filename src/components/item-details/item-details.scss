@@ -3,7 +3,9 @@
     flex-direction: row;
     padding: 1rem;
 
-    .item-image {
+    .planets-image,
+    .people-image,
+    .starships-image {
         width: 30%;
         height: 30%;
         border-radius: 10px;
