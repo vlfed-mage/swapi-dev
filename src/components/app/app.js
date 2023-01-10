@@ -17,8 +17,8 @@ const App = () => {
                 <RandomPlanet />
 
                 <PeoplePage />
-                <PlanetPage />
-                <StarshipPage />
+                {/*<PlanetPage />*/}
+                {/*<StarshipPage />*/}
             </ApiServiceProvider>
         </div>
     );
