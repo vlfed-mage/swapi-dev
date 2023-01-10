@@ -8,7 +8,7 @@ import RandomPlanetView from '../random-planet-view';
 import ErrorIndicator from '../error-indicator';
 
 const RandomPlanet = (props) => {
-
+    let cancelled = false;
     const _categoryName = 'planets',
     apiServices = new ApiServices(),
     [ planet, setPlanet ] = useState(null),
@@ -16,6 +16,7 @@ const RandomPlanet = (props) => {
     [ error, setError ] = useState(false);
 
     useEffect(() => {
+        cancelled = false;
         updatePlanet();
         const updatePlanetInterval = setInterval(
             updatePlanet,
@@ -23,14 +24,17 @@ const RandomPlanet = (props) => {
         );
 
         return () => {
+            cancelled = true;
             clearInterval(updatePlanetInterval);
         }
     }, []);
 
     const onPlanetLoaded = (planet) => {
-        setPlanet(planet);
-        setLoading(false);
-        setError(false);
+        if (!cancelled) {
+            setPlanet(planet);
+            setLoading(false);
+            setError(false);
+        }
     },
 
     onPlanetError = () => {
@@ -68,7 +72,7 @@ const RandomPlanet = (props) => {
 }
 
 RandomPlanet.defaultProps = {
-    updateInterval: 4000
+    updateInterval: 5000
 }
 
 RandomPlanet.propTypes = {
