@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 
 import ApiServices from '../../api-services';
@@ -7,81 +7,72 @@ import LoaderIndicator from '../loader-indicator';
 import RandomPlanetView from '../random-planet-view';
 import ErrorIndicator from '../error-indicator';
 
-export default class RandomPlanet extends Component {
-    static defaultProps = {
-        updateInterval: 10000
-    }
+const RandomPlanet = (props) => {
 
-    static propTypes = {
-        updateInterval: PropTypes.number
-    }
+    const _categoryName = 'planets',
+    apiServices = new ApiServices(),
+    [ planet, setPlanet ] = useState(null),
+    [ loading, setLoading ] = useState(true),
+    [ error, setError ] = useState(false);
 
-    _categoryName = 'planets'
-    apiServices = new ApiServices();
-    state = {
-        planet: null,
-        loading: true,
-        error: false
-    }
+    useEffect(() => {
+        updatePlanet();
+        const updatePlanetInterval = setInterval(
+            updatePlanet,
+            props.updateInterval
+        );
 
-    componentDidMount() {
-        this.updatePlanet();
-        this.updatePlanetInterval = setInterval(
-            this.updatePlanet,
-            this.props.updateInterval
-        )
-    }
+        return () => {
+            clearInterval(updatePlanetInterval);
+        }
+    }, []);
 
-    componentWillUnmount() {
-        clearInterval(this.updatePlanetInterval)
-    }
-
-    onPlanetLoaded = (planet) => {
-        this.setState({
-            planet,
-            loading: false,
-            error: false
-        })
-    }
+    const onPlanetLoaded = (planet) => {
+        setPlanet(planet);
+        setLoading(false);
+        setError(false);
+    },
 
     onPlanetError = () => {
-        this.setState({
-            loading: false,
-            error: true
-        })
-    }
+        setLoading(false);
+        setError(true);
+    },
 
     updatePlanet = () => {
-        this.setState({
-            loading: true,
-            error: false
-        })
+        setLoading(true);
+        setError(false);
 
         const id = Math.floor(Math.random()*28 + 2);
 
-        this.apiServices
+        apiServices
             .getItem('planets', id)
-            .then( this.onPlanetLoaded )
-            .catch( this.onPlanetError )
-    }
+            .then( onPlanetLoaded )
+            .catch( onPlanetError )
+    };
 
-    render() {
-        const { planet, loading, error } = this.state;
+    return (
+        <div className='random-planet jumbotron rounded'>
+            {
+                loading
+                    ? <LoaderIndicator />
+                    : error
+                        ? <ErrorIndicator />
+                        : <RandomPlanetView
+                            name={ _categoryName }
+                            planet={ planet } />
 
-        return (
-            <div className='random-planet jumbotron rounded'>
-                {
-                    loading
-                        ? <LoaderIndicator />
-                        : error
-                            ? <ErrorIndicator />
-                            : <RandomPlanetView
-                                name={ this._categoryName }
-                                planet={ planet } />
+            }
+        </div>
 
-                }
-            </div>
-
-        );
-    }
+    );
 }
+
+RandomPlanet.defaultProps = {
+    updateInterval: 4000
+}
+
+RandomPlanet.propTypes = {
+    updateInterval: PropTypes.number
+}
+
+export default RandomPlanet;
