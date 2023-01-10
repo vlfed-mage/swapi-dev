@@ -9,7 +9,7 @@ import ApiServicesContext from "../sw-service-context";
 import ErrorBoundary from "../error-boundary";
 
 const App = () => {
-    const apiServices = new ApiServices();
+    const apiServices = ApiServices();
 
     return (
         <div className='app-wrapper'>
