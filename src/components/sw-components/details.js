@@ -9,18 +9,9 @@ const PlanetDetails = withData(ItemDetails, 'planets', true);
 
 const StarshipDetails = withData(ItemDetails, 'starships', true);
 
-const Feature = ({ data, field, label }) => {
-    return (
-        <li className='list-group-item' >
-            <span className='term'>{ `${ label }: ` }</span>
-            <span>{ data[field] }</span>
-        </li>
-    )
-}
 
 export {
     PersonDetails,
     PlanetDetails,
-    StarshipDetails,
-    Feature
+    StarshipDetails
 }

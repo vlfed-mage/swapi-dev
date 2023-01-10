@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { PeopleList, PersonDetails, Feature } from "../sw-components";
+import { PeopleList, PersonDetails } from "../sw-components";
+import Feature from "../feature";
 
 const PeoplePage = () => {
 

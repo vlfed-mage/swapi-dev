@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, Fragment, Children, cloneElement } from 'react';
 
 import PropTypes from "prop-types";
 
 import LoaderIndicator from '../loader-indicator';
-import RandomPlanetView from '../random-planet-view';
 import ErrorIndicator from '../error-indicator';
 
 import ApiServicesContext from "../sw-service-context";
@@ -17,34 +16,35 @@ const RandomPlanet = (props) => {
     }, []);
 
     const _categoryName = 'planets',
-        [ planet, setPlanet ] = useState(null),
-        [ loading, setLoading ] = useState(true),
-        [ error, setError ] = useState(false),
+    [ data, setData ] = useState(null),
+    [ loading, setLoading ] = useState(true),
+    [ error, setError ] = useState(false),
 
-        { getItem } = useContext(ApiServicesContext),
+    { getItem, getImgUrl, onImageError } = useContext(ApiServicesContext),
+    { children } = props,
 
-        onPlanetLoaded = (planet) => {
-            if (!cancelledReq) {
-                setPlanet(planet);
-                setLoading(false);
-                setError(false);
-            }
-        },
-
-        onPlanetError = () => {
+    onPlanetLoaded = (data) => {
+        if (!cancelledReq) {
+            setData(data);
             setLoading(false);
-            setError(true);
-        },
-
-        updatePlanet = () => {
-            setLoading(true);
             setError(false);
+        }
+    },
 
-            const id = Math.floor(Math.random()*28 + 2);
-            getItem('planets', id)
-                .then( onPlanetLoaded )
-                .catch( onPlanetError )
-        };
+    onPlanetError = () => {
+        setLoading(false);
+        setError(true);
+    },
+
+    updatePlanet = () => {
+        setLoading(true);
+        setError(false);
+
+        const id = Math.floor(Math.random()*28 + 2);
+        getItem(_categoryName, id)
+            .then( onPlanetLoaded )
+            .catch( onPlanetError )
+    };
 
     useEffect(() => {
         const updatePlanetTimeout = setTimeout(
@@ -56,19 +56,28 @@ const RandomPlanet = (props) => {
             clearTimeout(updatePlanetTimeout);
             cancelledReq = true;
         }
-    }, [planet]);
+    }, [data]);
 
     return (
         <div className='random-planet jumbotron rounded'>
-            {
-                loading
-                    ? <LoaderIndicator />
-                    : error
-                        ? <ErrorIndicator />
-                        : <RandomPlanetView
-                            name={ _categoryName }
-                            planet={ planet } />
-
+            { loading && <LoaderIndicator /> }
+            { error && <ErrorIndicator /> }
+            { (!loading && !error) &&
+                <Fragment>
+                    <img className='planet-image'
+                         src={ getImgUrl(_categoryName, data.id) }
+                         onError={ onImageError }
+                         alt='random planet image' />
+                    <div>
+                        <h4>{ data.name }</h4>
+                        <ul className='list-group list-group-flush'>
+                            { Children.map(
+                                children,
+                                (child) => cloneElement(child, { data })
+                            ) }
+                        </ul>
+                    </div>
+                </Fragment>
             }
         </div>
 

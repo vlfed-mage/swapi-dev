@@ -7,6 +7,7 @@ import { PeoplePage, PlanetPage, StarshipPage } from "../pages";
 import { ApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
 import ErrorBoundary from "../error-boundary";
+import Feature from "../feature";
 
 const App = () => {
     const apiServices = ApiServices();
@@ -18,7 +19,11 @@ const App = () => {
                     <Header />
                 </ErrorBoundary>
                 <ErrorBoundary>
-                    <RandomPlanet />
+                    <RandomPlanet>
+                        <Feature label='Population' field='population'/>
+                        <Feature label='Rotation Period' field='rotationPeriod'/>
+                        <Feature label='Diameter' field='diameter'/>
+                    </RandomPlanet>
                 </ErrorBoundary>
 
                 <PeoplePage />
