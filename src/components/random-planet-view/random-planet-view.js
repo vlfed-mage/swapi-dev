@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 
-import { ApiServiceConsumer } from "../sw-service-context";
+import ApiServicesContext from "../sw-service-context";
 
 const RandomPlanetView = (props) => {
 
     const { id, name, population, rotationPeriod, diameter } = props.planet;
 
     return (
-        <ApiServiceConsumer>
+        <ApiServicesContext.Consumer>
             {
                 ({ getImgUrl, onImageError }) => {
                     return (
@@ -37,7 +37,7 @@ const RandomPlanetView = (props) => {
                     )
                 }
             }
-        </ApiServiceConsumer>
+        </ApiServicesContext.Consumer>
     )
 }
 

@@ -1,6 +1,6 @@
 import dumb from "../images/death-star.svg";
 
-export default class ApiServices {
+export class ApiServices {
 
     _bodyUrl = 'https://swapi.dev/api/';
     _bodyImgUrl = 'https://starwars-visualguide.com/assets/img/';

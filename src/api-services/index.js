@@ -1,3 +1,7 @@
-import ApiServices from "./api-services";
+import { ApiServices } from "./api-services";
+import { abortController } from "./abort-controller";
 
-export default ApiServices;
+export {
+    ApiServices,
+    abortController
+};

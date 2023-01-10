@@ -1,13 +1,13 @@
 import React from 'react';
 
 const ItemList = (props) => {
-    const {onListItemSelected, data, children: renderItems} = props;
+    const {onListItemSelected, data, children: renderItems} = props,
 
-    const onItemClick = (id) => {
+    onItemClick = (id) => {
         onListItemSelected(id);
-    }
+    },
 
-    const renderItemsList = (data) => {
+    renderItemsList = (data) => {
         return data.map((item) => {
             const { id, selected } = item,
                 label = renderItems(item), // can be any of type, including function
@@ -22,7 +22,7 @@ const ItemList = (props) => {
                 </li>
             )
         })
-    }
+    };
 
     return (
         <ul className='item-list list-group'>

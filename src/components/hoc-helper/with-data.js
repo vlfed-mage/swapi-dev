@@ -1,71 +1,63 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
-import ApiServices from "../../api-services";
 
-const withData = (View, name, withId = false) => {
-    return class extends Component {
-        state = {
-            data: null,
-            loading: true,
-            error: false
-        }
+import ApiServicesContext from "../sw-service-context";
+
+const withData = ( View, name, withId = false ) => {
+    return ( props ) => {
+
+        let cancelledReq = false;
+        const { getItem, getCollection } = useContext(ApiServicesContext),
+
+        [ data, setData ] = useState(null),
+        [ loading, setLoading ] = useState(true),
+        [ error, setError ] = useState(false),
+
+        { selectedItemId } = props,
 
         getData = () => {
-            const { getItem, getCollection } = new ApiServices();
             return withId
-                ? getItem(name, this.props.selectedItemId)
+                ? getItem(name, selectedItemId)
                 : getCollection(name);
-        }
+        },
 
         onDataLoaded = (data) => {
-            this.setState({
-                data: data,
-                loading: false
-            })
-        }
+            if (!cancelledReq) {
+                setData(data);
+                setLoading(false);
+            }
+        },
 
         onDataError = () => {
-            this.setState({
-                loading: false,
-                error: true
-            })
-        }
+            setLoading(false);
+            setError(true);
+        },
 
         onDataReset = () => {
-            this.setState({
-                loading: true,
-                error: false
-            })
-        }
+            setLoading(true);
+            setError(false);
+        };
 
-        componentDidMount() {
-            this.getData()
-                .then( this.onDataLoaded )
-                .catch( this.onDataError )
-        }
+        useEffect(() => {
+            onDataReset();
+            getData()
+                .then( onDataLoaded )
+                .catch( onDataError );
 
-        componentDidUpdate(prevProps) {
-            if (this.props.selectedItemId !== prevProps.selectedItemId) {
-                this.onDataReset()
-                this.getData()
-                    .then( this.onDataLoaded )
-                    .catch( this.onDataError )
+            return () => {
+                cancelledReq = true;
             }
-        }
+        }, [selectedItemId]);
 
-        render() {
-            const { data, error, loading } = this.state;
-
-            return (
-                loading
-                    ? <LoaderIndicator />
-                    : error
-                        ? <ErrorIndicator />
-                        : <View { ...this.props } data={ data } />
-            )
-        }
+        return (
+            loading
+                ? <LoaderIndicator />
+                : error
+                    ? <ErrorIndicator />
+                    : <View { ...props } data={ data } />
+        )
     };
 };
 

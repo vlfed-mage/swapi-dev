@@ -1,9 +1,3 @@
-import {
-    ApiServiceProvider,
-    ApiServiceConsumer
-} from './sw-service-context';
+import ApiServicesContext from './sw-service-context';
 
-export {
-    ApiServiceProvider,
-    ApiServiceConsumer
-}
+export default ApiServicesContext;
