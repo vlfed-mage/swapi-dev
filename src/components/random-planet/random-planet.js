@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import LoaderIndicator from '../loader-indicator';
 import ErrorIndicator from '../error-indicator';
+import ImageView from "../image-view";
 
 import ApiServicesContext from "../sw-service-context";
 
@@ -11,16 +12,12 @@ const RandomPlanet = (props) => {
 
     let cancelledReq = false;
 
-    useEffect(() => {
-        updatePlanet();
-    }, []);
-
     const _categoryName = 'planets',
     [ data, setData ] = useState(null),
     [ loading, setLoading ] = useState(true),
     [ error, setError ] = useState(false),
 
-    { getItem, getImgUrl, onImageError } = useContext(ApiServicesContext),
+    { getItem } = useContext(ApiServicesContext),
     { children } = props,
 
     onPlanetLoaded = (data) => {
@@ -47,6 +44,10 @@ const RandomPlanet = (props) => {
     };
 
     useEffect(() => {
+        updatePlanet();
+    }, []);
+
+    useEffect(() => {
         const updatePlanetTimeout = setTimeout(
             updatePlanet,
             props.updateInterval
@@ -64,10 +65,9 @@ const RandomPlanet = (props) => {
             { error && <ErrorIndicator /> }
             { (!loading && !error) &&
                 <Fragment>
-                    <img className='planet-image'
-                         src={ getImgUrl(_categoryName, data.id) }
-                         onError={ onImageError }
-                         alt='random planet image' />
+                    <ImageView
+                        id={ data.id }
+                        name={ _categoryName } />
                     <div>
                         <h4>{ data.name }</h4>
                         <ul className='list-group list-group-flush'>

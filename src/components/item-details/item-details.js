@@ -1,6 +1,7 @@
 import React, { Children, cloneElement, useContext } from 'react';
 
 import ApiServicesContext from "../sw-service-context";
+import ImageView from "../image-view";
 
 const ItemDetails = (props) => {
 
@@ -10,10 +11,9 @@ const ItemDetails = (props) => {
 
     return (
         <div className='item-details card' >
-            <img className='item-image'
-                 src={ getImgUrl(props.name, id) }
-                 onError={ onImageError }
-                 alt='item details image' />
+            <ImageView
+                id={ id }
+                name={ props.name } />
 
             <div className='card-body' >
                 <h4>{ name }</h4>
