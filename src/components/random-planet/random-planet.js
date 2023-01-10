@@ -12,34 +12,39 @@ const RandomPlanet = (props) => {
 
     let cancelledReq = false;
 
+    useEffect(() => {
+        updatePlanet();
+    }, []);
+
     const _categoryName = 'planets',
-    { getItem } = useContext(ApiServicesContext),
-    [ planet, setPlanet ] = useState(null),
-    [ loading, setLoading ] = useState(true),
-    [ error, setError ] = useState(false),
+        [ planet, setPlanet ] = useState(null),
+        [ loading, setLoading ] = useState(true),
+        [ error, setError ] = useState(false),
 
-    onPlanetLoaded = (planet) => {
-        if (!cancelledReq) {
-            setPlanet(planet);
+        { getItem } = useContext(ApiServicesContext),
+
+        onPlanetLoaded = (planet) => {
+            if (!cancelledReq) {
+                setPlanet(planet);
+                setLoading(false);
+                setError(false);
+            }
+        },
+
+        onPlanetError = () => {
             setLoading(false);
+            setError(true);
+        },
+
+        updatePlanet = () => {
+            setLoading(true);
             setError(false);
-        }
-    },
 
-    onPlanetError = () => {
-        setLoading(false);
-        setError(true);
-    },
-
-    updatePlanet = () => {
-        setLoading(true);
-        setError(false);
-
-        const id = Math.floor(Math.random()*28 + 2);
-        getItem('planets', id)
-            .then( onPlanetLoaded )
-            .catch( onPlanetError )
-    };
+            const id = Math.floor(Math.random()*28 + 2);
+            getItem('planets', id)
+                .then( onPlanetLoaded )
+                .catch( onPlanetError )
+        };
 
     useEffect(() => {
         const updatePlanetTimeout = setTimeout(

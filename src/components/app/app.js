@@ -6,6 +6,7 @@ import { PeoplePage, PlanetPage, StarshipPage } from "../pages";
 
 import { ApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
+import ErrorBoundary from "../error-boundary";
 
 const App = () => {
     const apiServices = new ApiServices();
@@ -13,9 +14,15 @@ const App = () => {
     return (
         <div className='app-wrapper'>
             <ApiServicesContext.Provider value={ apiServices }>
-                <Header />
-                <RandomPlanet />
+                <ErrorBoundary>
+                    <Header />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <RandomPlanet />
+                </ErrorBoundary>
 
+                <PeoplePage />
+                <PlanetPage />
                 <StarshipPage />
             </ApiServicesContext.Provider>
         </div>
