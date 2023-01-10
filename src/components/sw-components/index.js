@@ -2,7 +2,6 @@ import {
     PersonDetails,
     PlanetDetails,
     StarshipDetails,
-    Feature
 } from './details';
 
 import {
@@ -12,7 +11,6 @@ import {
 } from './list-items'
 
 export {
-    Feature,
     PersonDetails,
     PlanetDetails,
     StarshipDetails,

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { StarshipList, StarshipDetails, Feature } from "../sw-components";
+import { StarshipList, StarshipDetails } from "../sw-components";
+import Feature from "../feature";
 
 const StarshipPage = () => {
 
