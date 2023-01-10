@@ -1,11 +1,5 @@
 import { createContext } from "react";
 
-const {
-    Provider : ApiServiceProvider,
-    Consumer : ApiServiceConsumer
-} = createContext(undefined, undefined);
+const ApiServicesContext = createContext();
 
-export {
-    ApiServiceProvider,
-    ApiServiceConsumer
-}
+export default ApiServicesContext;

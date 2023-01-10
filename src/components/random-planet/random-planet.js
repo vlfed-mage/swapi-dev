@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from "prop-types";
+import React, { useEffect, useState, useContext } from 'react';
 
-import ApiServices from '../../api-services';
+import PropTypes from "prop-types";
 
 import LoaderIndicator from '../loader-indicator';
 import RandomPlanetView from '../random-planet-view';
 import ErrorIndicator from '../error-indicator';
 
+import ApiServicesContext from "../sw-service-context";
+
 const RandomPlanet = (props) => {
-    let cancelled = false;
+
+    let cancelledReq = false;
+
     const _categoryName = 'planets',
-    apiServices = new ApiServices(),
+    { getItem } = useContext(ApiServicesContext),
     [ planet, setPlanet ] = useState(null),
     [ loading, setLoading ] = useState(true),
-    [ error, setError ] = useState(false);
+    [ error, setError ] = useState(false),
 
-    useEffect(() => {
-        cancelled = false;
-        updatePlanet();
-        const updatePlanetInterval = setInterval(
-            updatePlanet,
-            props.updateInterval
-        );
-
-        return () => {
-            cancelled = true;
-            clearInterval(updatePlanetInterval);
-        }
-    }, []);
-
-    const onPlanetLoaded = (planet) => {
-        if (!cancelled) {
+    onPlanetLoaded = (planet) => {
+        if (!cancelledReq) {
             setPlanet(planet);
             setLoading(false);
             setError(false);
@@ -47,12 +36,22 @@ const RandomPlanet = (props) => {
         setError(false);
 
         const id = Math.floor(Math.random()*28 + 2);
-
-        apiServices
-            .getItem('planets', id)
+        getItem('planets', id)
             .then( onPlanetLoaded )
             .catch( onPlanetError )
     };
+
+    useEffect(() => {
+        const updatePlanetTimeout = setTimeout(
+            updatePlanet,
+            props.updateInterval
+        );
+
+        return () => {
+            clearTimeout(updatePlanetTimeout);
+            cancelledReq = true;
+        }
+    }, [planet]);
 
     return (
         <div className='random-planet jumbotron rounded'>
@@ -72,7 +71,7 @@ const RandomPlanet = (props) => {
 }
 
 RandomPlanet.defaultProps = {
-    updateInterval: 5000
+    updateInterval: 10000
 }
 
 RandomPlanet.propTypes = {
