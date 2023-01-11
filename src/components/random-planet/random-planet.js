@@ -17,7 +17,7 @@ const RandomPlanet = (props) => {
     [ loading, setLoading ] = useState(true),
     [ error, setError ] = useState(false),
 
-    { getItem } = useContext(ApiServicesContext),
+    { getData } = useContext(ApiServicesContext),
     { children } = props,
 
     onPlanetLoaded = (data) => {
@@ -38,7 +38,7 @@ const RandomPlanet = (props) => {
         setError(false);
 
         const id = Math.floor(Math.random()*28 + 2);
-        getItem(_categoryName, id)
+        getData(_categoryName, id)
             .then( onPlanetLoaded )
             .catch( onPlanetError )
     };
@@ -60,26 +60,26 @@ const RandomPlanet = (props) => {
     }, [data]);
 
     return (
-        <div className='random-planet jumbotron rounded'>
-            { loading && <LoaderIndicator /> }
-            { error && <ErrorIndicator /> }
-            { (!loading && !error) &&
-                <Fragment>
-                    <ImageView
-                        id={ data.id }
-                        name={ _categoryName } />
-                    <div>
-                        <h4>{ data.name }</h4>
-                        <ul className='list-group list-group-flush'>
-                            { Children.map(
-                                children,
-                                (child) => cloneElement(child, { data })
-                            ) }
-                        </ul>
-                    </div>
-                </Fragment>
-            }
-        </div>
+        <div className='random-planet jumbotron rounded'> {
+            loading
+                ? <LoaderIndicator />
+                : error
+                    ? <ErrorIndicator />
+                    : <Fragment>
+                        <ImageView
+                            id={ data.id }
+                            name={ _categoryName } />
+                        <div>
+                            <h4>{ data.name }</h4>
+                            <ul className='list-group list-group-flush'>
+                                { Children.map(
+                                    children,
+                                    (child) => cloneElement(child, { data })
+                                ) }
+                            </ul>
+                        </div>
+                    </Fragment>
+        } </div>
 
     );
 }

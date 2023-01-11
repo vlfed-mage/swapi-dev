@@ -1,55 +1,14 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React from "react";
 
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
 
-import ApiServicesContext from "../sw-service-context";
+import { useData } from "../hooks";
 
-const withData = ( View, name, withId = false ) => {
+const withData = ( View, name ) => {
     return ( props ) => {
-
-        let cancelledReq = false;
-        const { getItem, getCollection } = useContext(ApiServicesContext),
-
-        [ data, setData ] = useState(null),
-        [ loading, setLoading ] = useState(true),
-        [ error, setError ] = useState(false),
-
-        { selectedItemId } = props,
-
-        getData = () => {
-            return withId
-                ? getItem(name, selectedItemId)
-                : getCollection(name);
-        },
-
-        onDataLoaded = (data) => {
-            if (!cancelledReq) {
-                setData(data);
-                setLoading(false);
-            }
-        },
-
-        onDataError = () => {
-            setLoading(false);
-            setError(true);
-        },
-
-        onDataReset = () => {
-            setLoading(true);
-            setError(false);
-        };
-
-        useEffect(() => {
-            onDataReset();
-            getData()
-                .then( onDataLoaded )
-                .catch( onDataError );
-
-            return () => {
-                cancelledReq = true;
-            }
-        }, [selectedItemId]);
+        const { selectedItemId } = props,
+        { loading, error, data } = useData(name, selectedItemId);
 
         return (
             loading

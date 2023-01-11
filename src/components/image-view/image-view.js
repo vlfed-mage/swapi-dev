@@ -10,7 +10,7 @@ const ImageView = (props) => {
     return (
         <img className={ imageName }
              src={ getImgUrl(name, id) }
-             onError={ onImageError }
+             onError={ (e) => onImageError(e) }
              alt= { imageName } />
     )
 };
