@@ -3,7 +3,7 @@ import dumb from "../images/death-star.svg";
 const ApiServices = () => {
 
     const _bodyUrl = 'https://swapi.dev/api/',
-        _bodyImgUrl = 'https://starwars-visualguide.com/assets/img/';
+    _bodyImgUrl = 'https://starwars-visualguide.com/assets/img/';
 
     async function _getData(name, id = '') {
         const data = await fetch(`${_bodyUrl}${name}/${id}`);
@@ -23,46 +23,46 @@ const ApiServices = () => {
     }
 
     const _transformPlanet = (planet) => {
-            return {
-                id: _extractId(planet.url),
-                name: planet.name,
-                population: planet.population,
-                rotationPeriod: planet.rotation_period,
-                diameter: planet.diameter,
-                selected: false
-            }
-        },
+        return {
+            id: _extractId(planet.url),
+            name: planet.name,
+            population: planet.population,
+            rotationPeriod: planet.rotation_period,
+            diameter: planet.diameter,
+            selected: false
+        }
+    },
 
-        _transformPerson = (person) => {
-            return {
-                id: _extractId(person.url),
-                name: person.name,
-                gender: person.gender,
-                birthYear: person.birth_year,
-                eyeColor: person.eye_color,
-                selected: false
-            }
-        },
+    _transformPerson = (person) => {
+        return {
+            id: _extractId(person.url),
+            name: person.name,
+            gender: person.gender,
+            birthYear: person.birth_year,
+            eyeColor: person.eye_color,
+            selected: false
+        }
+    },
 
-        _transformStarship = (starship) => {
-            return {
-                id: _extractId(starship.url),
-                name: starship.name,
-                manufacturer: starship.manufacturer,
-                passengers: starship.passengers,
-                starshipClass: starship.starship_class,
-                selected: false
-            }
-        },
+    _transformStarship = (starship) => {
+        return {
+            id: _extractId(starship.url),
+            name: starship.name,
+            manufacturer: starship.manufacturer,
+            passengers: starship.passengers,
+            starshipClass: starship.starship_class,
+            selected: false
+        }
+    },
 
-        _transformPageNameToCategory = (name) => {
-            switch (name) {
-                case 'people':
-                    return 'characters'
-                default:
-                    return name;
-            }
-        };
+    _transformPageNameToCategory = (name) => {
+        switch (name) {
+            case 'people':
+                return 'characters'
+            default:
+                return name;
+        }
+    };
 
     return {
         getCollection: async (name) => {
