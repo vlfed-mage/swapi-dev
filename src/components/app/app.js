@@ -27,8 +27,8 @@ const App = () => {
                 </ErrorBoundary>
 
                 <PeoplePage />
-                <PlanetPage />
-                <StarshipPage />
+                {/*<PlanetPage />*/}
+                {/*<StarshipPage />*/}
             </ApiServicesContext.Provider>
         </div>
     );
