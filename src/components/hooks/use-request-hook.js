@@ -6,14 +6,13 @@ const useRequest = (request) => {
 
     const initialState = useMemo(() => ({
         data: null,
-        loading: false,
+        loading: true,
         error: null
     }), []),
 
     [ dataState, setDataState ] = useState(initialState),
 
     onDataLoaded = (data) => {
-        console.log('onDataLoaded', data)
         if (!cancelledReq) {
             setDataState({
                 data,
@@ -24,7 +23,6 @@ const useRequest = (request) => {
     },
 
     onDataError = (error) => {
-        console.log('onDataLoaded', error)
         if (!cancelledReq) {
             setDataState({
                 data: null,
@@ -35,7 +33,6 @@ const useRequest = (request) => {
     };
 
     useEffect(() => {
-        console.log('useEffect', initialState)
         setDataState(initialState);
         request()
             .then( onDataLoaded )

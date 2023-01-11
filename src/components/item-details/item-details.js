@@ -1,13 +1,11 @@
-import React, { Children, cloneElement, useContext } from 'react';
+import React, { Children, cloneElement } from 'react';
 
-import ApiServicesContext from "../sw-service-context";
 import ImageView from "../image-view";
 
 const ItemDetails = (props) => {
 
     const { data, children } = props,
-    { id, name } = data,
-    { getImgUrl, onImageError } = useContext(ApiServicesContext);
+    { id, name } = data;
 
     return (
         <div className='item-details card' >

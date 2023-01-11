@@ -62,35 +62,41 @@ const ApiServices = () => {
             default:
                 return name;
         }
+    },
+
+    getItem = async (name, id) => {
+        const item = await _getData(name, id);
+        switch (name) {
+            case 'planets':
+                return _transformPlanet(item);
+            case 'people':
+                return _transformPerson(item)
+            case 'starships':
+                return _transformStarship(item)
+            default:
+                return item;
+        }
+    },
+
+    getCollection = async (name) => {
+        const collection = await _getData(name);
+        switch (name) {
+            case 'planets':
+                return collection.results.map(_transformPlanet);
+            case 'people':
+                return collection.results.map(_transformPerson)
+            case 'starships':
+                return collection.results.map(_transformStarship)
+            default:
+                return collection.results;
+        }
     };
 
     return {
-        getCollection: async (name) => {
-            const collection = await _getData(name);
-            switch (name) {
-                case 'planets':
-                    return collection.results.map(_transformPlanet);
-                case 'people':
-                    return collection.results.map(_transformPerson)
-                case 'starships':
-                    return collection.results.map(_transformStarship)
-                default:
-                    return collection.results;
-            }
-        },
-
-        getItem: async (name, id) => {
-            const item = await _getData(name, id);
-            switch (name) {
-                case 'planets':
-                    return _transformPlanet(item);
-                case 'people':
-                    return _transformPerson(item)
-                case 'starships':
-                    return _transformStarship(item)
-                default:
-                    return item;
-            }
+        getData: (name, id) => {
+            return id
+                ? getItem(name, id)
+                : getCollection(name);
         },
 
         getImgUrl: (name, id) => {
