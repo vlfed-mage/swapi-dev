@@ -31,6 +31,7 @@ const PeoplePage = () => {
                     <Feature label='Gender' field='gender'/>
                     <Feature label='Birth Year' field='birthYear'/>
                     <Feature label='Eye Color' field='eyeColor'/>
+
                 </ItemDetails>
             </ErrorBoundary>
         </Row>

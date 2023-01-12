@@ -18,7 +18,9 @@ const PlanetPage = () => {
     return (
         <Row >
             <ErrorBoundary>
-                <PlanetList onListItemSelected={ onListItemSelected } />
+                <PlanetList
+                    name={ _pageName }
+                    onListItemSelected={ onListItemSelected } />
             </ErrorBoundary>
             <ErrorBoundary>
                 <ItemDetails
