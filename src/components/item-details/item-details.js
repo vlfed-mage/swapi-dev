@@ -16,8 +16,6 @@ const ItemDetails = ( props ) => {
         ? props.classNames
         : 'item-details card';
 
-    console.log(data);
-
     return (
         <div className= { classNames } >
 
