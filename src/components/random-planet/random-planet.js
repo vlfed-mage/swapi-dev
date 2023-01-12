@@ -2,9 +2,8 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
 import ItemDetails from "../item-details";
-import Feature from "../feature";
 
-const RandomPlanet = ( props ) => {
+const RandomPlanet = ({ updateInterval, listItems }) => {
 
     const randomId = Math.floor(Math.random()*28 + 2),
     _categoryName = 'planets',
@@ -14,7 +13,7 @@ const RandomPlanet = ( props ) => {
     useEffect(() => {
         const randomPlanetInterval = setInterval(
             () => setId(Math.floor(Math.random()*28 + 2)),
-            props.updateInterval
+            updateInterval
         )
 
         return () => clearInterval(randomPlanetInterval);
@@ -26,9 +25,7 @@ const RandomPlanet = ( props ) => {
             selectedItemId={ id }
             classNames='random-planet jumbotron rounded card' >
 
-            <Feature label='Population' field='population'/>
-            <Feature label='Rotation Period' field='rotationPeriod'/>
-            <Feature label='Diameter' field='diameter'/>
+            { listItems }
 
         </ItemDetails>
     );

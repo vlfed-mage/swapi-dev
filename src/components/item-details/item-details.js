@@ -16,6 +16,8 @@ const ItemDetails = ( props ) => {
         ? props.classNames
         : 'item-details card';
 
+    console.log(data);
+
     return (
         <div className= { classNames } >
 
@@ -31,7 +33,7 @@ const ItemDetails = ( props ) => {
                     <h4>{ data.name }</h4>
                     <ul className='list-group list-group-flush' >
                         { Children.map(
-                            children,
+                            children.props.children,
                             (child) => cloneElement(child, { data })
                         ) }
                     </ul>

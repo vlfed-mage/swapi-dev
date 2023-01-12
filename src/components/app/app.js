@@ -3,8 +3,12 @@ import React from 'react';
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import Feature from "../feature";
-import { PeoplePage, PlanetPage, StarshipPage } from "../pages";
+import Page from "../page";
+import {
+    personDeps,
+    planetDeps,
+    starshipDeps
+}  from "../sw-components";
 
 import { ApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
@@ -19,16 +23,16 @@ const App = () => {
                     <Header />
                 </ErrorBoundary>
                 <ErrorBoundary>
-                    <RandomPlanet>
-                        <Feature label='Population' field='population'/>
-                        <Feature label='Rotation Period' field='rotationPeriod'/>
-                        <Feature label='Diameter' field='diameter'/>
-                    </RandomPlanet>
+                    <RandomPlanet listItems={ planetDeps } />
                 </ErrorBoundary>
 
-                <PeoplePage />
-                {/*<PlanetPage />*/}
-                {/*<StarshipPage />*/}
+                <Page category='people'
+                      listItems={ personDeps } />
+                <Page category='planets'
+                      listItems={ planetDeps } />
+                <Page category='starships'
+                      listItems={ starshipDeps } />
+
             </ApiServicesContext.Provider>
         </div>
     );

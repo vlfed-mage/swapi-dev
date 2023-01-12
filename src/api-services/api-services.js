@@ -29,7 +29,6 @@ const ApiServices = () => {
             population: planet.population,
             rotationPeriod: planet.rotation_period,
             diameter: planet.diameter,
-            selected: false
         }
     },
 
@@ -40,7 +39,6 @@ const ApiServices = () => {
             gender: person.gender,
             birthYear: person.birth_year,
             eyeColor: person.eye_color,
-            selected: false
         }
     },
 
@@ -51,7 +49,6 @@ const ApiServices = () => {
             manufacturer: starship.manufacturer,
             passengers: starship.passengers,
             starshipClass: starship.starship_class,
-            selected: false
         }
     },
 

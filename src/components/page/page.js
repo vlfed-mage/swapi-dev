@@ -2,15 +2,12 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import Feature from "../feature";
 import ItemDetails from "../item-details";
 import ItemList from "../item-list";
 
-const PlanetPage = () => {
+const Page = ({ category, listItems }) => {
 
-    const _pageName = 'planets',
-    [ selectedItemId, setSelectedItemId ] = useState('11'),
-
+    const [ selectedItemId, setSelectedItemId ] = useState('11'),
     renderName = (i) => `${ i.name }`,
 
     onListItemSelected = (id) => {
@@ -19,28 +16,23 @@ const PlanetPage = () => {
 
     return (
         <Row >
-            <ErrorBoundary>
+            <ErrorBoundary >
                 <ItemList
-                    name={ _pageName }
+                    name={ category }
                     onListItemSelected={ onListItemSelected } >
                     { renderName }
                 </ItemList>
             </ErrorBoundary>
-            <ErrorBoundary>
+
+            <ErrorBoundary >
                 <ItemDetails
-                    name={ _pageName }
+                    name={ category }
                     selectedItemId={ selectedItemId } >
-
-                    <Feature label='Population' field='population'/>
-                    <Feature label='Rotation Period' field='rotationPeriod'/>
-                    <Feature label='Diameter' field='diameter'/>
-
+                    { listItems }
                 </ItemDetails>
             </ErrorBoundary>
         </Row>
     )
 }
 
-export {
-    PlanetPage
-}
+export default Page;
