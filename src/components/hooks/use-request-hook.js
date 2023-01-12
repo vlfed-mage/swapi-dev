@@ -13,23 +13,19 @@ const useRequest = (request) => {
     [ dataState, setDataState ] = useState(initialState),
 
     onDataLoaded = (data) => {
-        if (!cancelledReq) {
-            setDataState({
-                data,
-                loading: false,
-                error: null
-            });
-        }
+        !cancelledReq && setDataState({
+            data,
+            loading: false,
+            error: null
+        });
     },
 
     onDataError = (error) => {
-        if (!cancelledReq) {
-            setDataState({
-                data: null,
-                loading: false,
-                error
-            });
-        }
+        !cancelledReq && setDataState({
+            data: null,
+            loading: false,
+            error
+        });
     };
 
     useEffect(() => {

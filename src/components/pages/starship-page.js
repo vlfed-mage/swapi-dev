@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { StarshipList, StarshipDetails } from "../sw-components";
+import { StarshipList } from "../sw-components";
 import Feature from "../feature";
+import ItemDetails from "../item-details";
 
 const StarshipPage = () => {
 
@@ -21,14 +22,14 @@ const StarshipPage = () => {
             </ErrorBoundary>
 
             <ErrorBoundary >
-                <StarshipDetails
+                <ItemDetails
                     name={ _pageName }
                     selectedItemId={ selectedItemId } >
 
                     <Feature label='Manufacturer' field='manufacturer'/>
                     <Feature label='Passengers' field='passengers'/>
                     <Feature label='Starship class' field='starshipClass'/>
-                </StarshipDetails>
+                </ItemDetails>
             </ErrorBoundary>
         </Row>
     )

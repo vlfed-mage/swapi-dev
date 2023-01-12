@@ -1,24 +1,15 @@
 import React from "react";
 
-import { withData, withChildren } from "../hoc-helper";
+import { withChildren } from "../hoc-helper";
 import ItemList from "../item-list";
 
 const renderName = (i) => `${ i.name }`;
 
-const PeopleList = withData(
-    withChildren(ItemList, renderName),
-    'people'
-);
+const PeopleList = withChildren(ItemList, renderName);
 
-const PlanetList = withData(
-    withChildren(ItemList, renderName),
-    'planets'
-);
+const PlanetList = withChildren(ItemList, renderName);
 
-const StarshipList = withData(
-    withChildren(ItemList, renderName),
-    'starships'
-);
+const StarshipList = withChildren(ItemList, renderName);
 
 export {
     PeopleList,

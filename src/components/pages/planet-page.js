@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { PlanetList, PlanetDetails } from "../sw-components";
+import { PlanetList } from "../sw-components";
 import Feature from "../feature";
+import ItemDetails from "../item-details";
 
 const PlanetPage = () => {
 
@@ -20,7 +21,7 @@ const PlanetPage = () => {
                 <PlanetList onListItemSelected={ onListItemSelected } />
             </ErrorBoundary>
             <ErrorBoundary>
-                <PlanetDetails
+                <ItemDetails
                     name={ _pageName }
                     selectedItemId={ selectedItemId } >
 
@@ -28,7 +29,7 @@ const PlanetPage = () => {
                     <Feature label='Rotation Period' field='rotationPeriod'/>
                     <Feature label='Diameter' field='diameter'/>
 
-                </PlanetDetails>
+                </ItemDetails>
             </ErrorBoundary>
         </Row>
     )
