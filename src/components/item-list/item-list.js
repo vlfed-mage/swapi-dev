@@ -1,7 +1,11 @@
 import React from 'react';
+import {useData} from "../hooks";
+import LoaderIndicator from "../loader-indicator";
+import ErrorIndicator from "../error-indicator";
 
 const ItemList = (props) => {
-    const {onListItemSelected, data, children: renderItems} = props,
+    const { onListItemSelected, name, children: renderItems } = props,
+    { loading, error, data } = useData(name),
 
     onItemClick = (id) => {
         onListItemSelected(id);
@@ -23,6 +27,9 @@ const ItemList = (props) => {
             )
         })
     };
+
+    if (loading) return <LoaderIndicator />;
+    if (error) return <ErrorIndicator />;
 
     return (
         <ul className='item-list list-group'>

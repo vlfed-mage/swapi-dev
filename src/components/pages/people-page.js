@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { PeopleList, PersonDetails } from "../sw-components";
+import { PeopleList } from "../sw-components";
 import Feature from "../feature";
+import ItemDetails from "../item-details";
 
 const PeoplePage = () => {
 
@@ -17,18 +18,20 @@ const PeoplePage = () => {
     return (
         <Row >
             <ErrorBoundary >
-                <PeopleList onListItemSelected={ onListItemSelected } />
+                <PeopleList
+                    name={ _pageName }
+                    onListItemSelected={ onListItemSelected } />
             </ErrorBoundary>
 
             <ErrorBoundary >
-                <PersonDetails
+                <ItemDetails
                     name={ _pageName }
                     selectedItemId={ selectedItemId } >
 
                     <Feature label='Gender' field='gender'/>
                     <Feature label='Birth Year' field='birthYear'/>
                     <Feature label='Eye Color' field='eyeColor'/>
-                </PersonDetails>
+                </ItemDetails>
             </ErrorBoundary>
         </Row>
     )
