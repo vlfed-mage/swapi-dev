@@ -2,14 +2,16 @@ import React, { useState } from "react";
 
 import Row from "../row";
 import ErrorBoundary from "../error-boundary";
-import { PlanetList } from "../sw-components";
 import Feature from "../feature";
 import ItemDetails from "../item-details";
+import ItemList from "../item-list";
 
 const PlanetPage = () => {
 
     const _pageName = 'planets',
     [ selectedItemId, setSelectedItemId ] = useState('11'),
+
+    renderName = (i) => `${ i.name }`,
 
     onListItemSelected = (id) => {
         setSelectedItemId(id);
@@ -18,9 +20,11 @@ const PlanetPage = () => {
     return (
         <Row >
             <ErrorBoundary>
-                <PlanetList
+                <ItemList
                     name={ _pageName }
-                    onListItemSelected={ onListItemSelected } />
+                    onListItemSelected={ onListItemSelected } >
+                    { renderName }
+                </ItemList>
             </ErrorBoundary>
             <ErrorBoundary>
                 <ItemDetails

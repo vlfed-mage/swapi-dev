@@ -35,7 +35,7 @@ const RandomPlanet = ( props ) => {
 }
 
 RandomPlanet.defaultProps = {
-    updateInterval: 6000
+    updateInterval: 60000
 }
 
 RandomPlanet.propTypes = {
