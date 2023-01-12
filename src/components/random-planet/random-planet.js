@@ -1,91 +1,41 @@
-import React, { useEffect, useState, useContext, Fragment, Children, cloneElement } from 'react';
-
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
-import LoaderIndicator from '../loader-indicator';
-import ErrorIndicator from '../error-indicator';
-import ImageView from "../image-view";
+import ItemDetails from "../item-details";
+import Feature from "../feature";
 
-import ApiServicesContext from "../sw-service-context";
+const RandomPlanet = ( props ) => {
 
-const RandomPlanet = (props) => {
+    const randomId = Math.floor(Math.random()*28 + 2),
+    _categoryName = 'planets',
 
-    let cancelledReq = false;
-
-    const _categoryName = 'planets',
-    [ data, setData ] = useState(null),
-    [ loading, setLoading ] = useState(true),
-    [ error, setError ] = useState(false),
-
-    { getData } = useContext(ApiServicesContext),
-    { children } = props,
-
-    onPlanetLoaded = (data) => {
-        if (!cancelledReq) {
-            setData(data);
-            setLoading(false);
-            setError(false);
-        }
-    },
-
-    onPlanetError = () => {
-        setLoading(false);
-        setError(true);
-    },
-
-    updatePlanet = () => {
-        setLoading(true);
-        setError(false);
-
-        const id = Math.floor(Math.random()*28 + 2);
-        getData(_categoryName, id)
-            .then( onPlanetLoaded )
-            .catch( onPlanetError )
-    };
+    [ id, setId ] = useState(randomId);
 
     useEffect(() => {
-        updatePlanet();
-    }, []);
-
-    useEffect(() => {
-        const updatePlanetTimeout = setTimeout(
-            updatePlanet,
+        const randomPlanetInterval = setInterval(
+            () => setId(Math.floor(Math.random()*28 + 2)),
             props.updateInterval
-        );
+        )
 
-        return () => {
-            clearTimeout(updatePlanetTimeout);
-            cancelledReq = true;
-        }
-    }, [data]);
+        return () => clearInterval(randomPlanetInterval);
+    }, [id])
 
     return (
-        <div className='random-planet jumbotron rounded'> {
-            loading
-                ? <LoaderIndicator />
-                : error
-                    ? <ErrorIndicator />
-                    : <Fragment>
-                        <ImageView
-                            id={ data.id }
-                            name={ _categoryName } />
-                        <div>
-                            <h4>{ data.name }</h4>
-                            <ul className='list-group list-group-flush'>
-                                { Children.map(
-                                    children,
-                                    (child) => cloneElement(child, { data })
-                                ) }
-                            </ul>
-                        </div>
-                    </Fragment>
-        } </div>
+        <ItemDetails
+            name={ _categoryName }
+            selectedItemId={ id }
+            classNames='random-planet jumbotron rounded card' >
 
+            <Feature label='Population' field='population'/>
+            <Feature label='Rotation Period' field='rotationPeriod'/>
+            <Feature label='Diameter' field='diameter'/>
+
+        </ItemDetails>
     );
 }
 
 RandomPlanet.defaultProps = {
-    updateInterval: 60000
+    updateInterval: 6000
 }
 
 RandomPlanet.propTypes = {

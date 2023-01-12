@@ -1,35 +1,54 @@
-import React, { Children, cloneElement } from 'react';
+import React, {Children, cloneElement, Fragment} from 'react';
 
 import ImageView from "../image-view";
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
-import {useData} from "../hooks";
 
-const ItemDetails = (props) => {
+import { useData } from "../hooks";
+import PropTypes from "prop-types";
 
-    const { name, selectedItemId, children } = props,
-    { loading, error, data } = useData(name, selectedItemId);
+const ItemDetails = ( props ) => {
 
-    if (loading) return <LoaderIndicator />;
-    if (error) return <ErrorIndicator />;
+    const { children, selectedItemId, name } = props,
+    { loading, error, data } = useData(name, selectedItemId),
+
+    classNames = props.classNames.length
+        ? props.classNames
+        : 'item-details card';
 
     return (
-        <div className='item-details card' >
-            <ImageView
-                id={ data.id }
-                name={ props.name } />
+        <div className= { classNames } >
 
-            <div className='card-body' >
-                <h4>{ data.name }</h4>
-                <ul className='list-group list-group-flush' >
-                    { Children.map(
-                        children,
-                        (child) => cloneElement(child, { data })
-                    ) }
-                </ul>
-            </div>
+            { loading && <LoaderIndicator /> }
+            { error && <ErrorIndicator /> }
+
+            { (!loading && !error) && <Fragment>
+                <ImageView
+                    id={ data.id }
+                    name={ name } />
+
+                <div>
+                    <h4>{ data.name }</h4>
+                    <ul className='list-group list-group-flush' >
+                        { Children.map(
+                            children,
+                            (child) => cloneElement(child, { data })
+                        ) }
+                    </ul>
+                </div>
+            </Fragment> }
         </div>
     )
 };
+
+ItemDetails.defaultProps = {
+    classNames: '',
+    name: 'people'
+}
+
+ItemDetails.propTypes = {
+    classNames: PropTypes.string,
+    name: PropTypes.string.isRequired
+}
 
 export default ItemDetails;

@@ -18,7 +18,9 @@ const StarshipPage = () => {
     return (
         <Row >
             <ErrorBoundary >
-                <StarshipList onListItemSelected={ onListItemSelected } />
+                <StarshipList
+                    name={ _pageName }
+                    onListItemSelected={ onListItemSelected } />
             </ErrorBoundary>
 
             <ErrorBoundary >
@@ -29,6 +31,7 @@ const StarshipPage = () => {
                     <Feature label='Manufacturer' field='manufacturer'/>
                     <Feature label='Passengers' field='passengers'/>
                     <Feature label='Starship class' field='starshipClass'/>
+
                 </ItemDetails>
             </ErrorBoundary>
         </Row>

@@ -1,7 +1,9 @@
 import React from 'react';
-import {useData} from "../hooks";
+
+import { useData } from "../hooks";
 import LoaderIndicator from "../loader-indicator";
 import ErrorIndicator from "../error-indicator";
+import PropTypes from "prop-types";
 
 const ItemList = (props) => {
     const { onListItemSelected, name, children: renderItems } = props,
@@ -28,14 +30,22 @@ const ItemList = (props) => {
         })
     };
 
-    if (loading) return <LoaderIndicator />;
-    if (error) return <ErrorIndicator />;
-
     return (
-        <ul className='item-list list-group'>
-            { renderItemsList(data) }
+        <ul className='item-list list-group card'>
+            { loading && <LoaderIndicator /> }
+            { error && <ErrorIndicator /> }
+
+            { (!loading && !error) && renderItemsList(data) }
         </ul>
     );
+};
+
+ItemList.defaultProps = {
+    name: 'people'
+}
+
+ItemList.propTypes = {
+    name: PropTypes.string.isRequired
 }
 
 export default ItemList;

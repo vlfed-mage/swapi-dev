@@ -1,13 +1,13 @@
 import React from 'react';
 
+import ErrorBoundary from "../error-boundary";
 import Header from '../header';
 import RandomPlanet from '../random-planet';
+import Feature from "../feature";
 import { PeoplePage, PlanetPage, StarshipPage } from "../pages";
 
 import { ApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
-import ErrorBoundary from "../error-boundary";
-import Feature from "../feature";
 
 const App = () => {
     const apiServices = ApiServices();
