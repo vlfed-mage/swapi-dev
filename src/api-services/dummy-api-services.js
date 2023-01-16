@@ -44,15 +44,6 @@ const DummyApiServices = () => {
         }
     },
 
-    _transformPageNameToCategory = (name) => {
-        switch (name) {
-            case 'people':
-                return 'characters'
-            default:
-                return name;
-        }
-    },
-
     getItem = async (name, id) => {
         switch (name) {
             case 'people':
