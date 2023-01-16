@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
@@ -10,17 +10,25 @@ import {
     starshipDeps
 }  from "../sw-components";
 
-import { DummyApiServices } from "../../api-services";
+import { ApiServices, DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
 
 const App = () => {
-    const apiServices = DummyApiServices();
+    const [ apiService, setApiService ] = useState(DummyApiServices()),
+
+    onServiceChange = () => {
+        const Service = apiService.dummy
+            ? ApiServices
+            : DummyApiServices;
+        setApiService(Service());
+    };
 
     return (
         <div className='app-wrapper'>
-            <ApiServicesContext.Provider value={ apiServices }>
+            <ApiServicesContext.Provider value={ apiService }>
                 <ErrorBoundary>
-                    <Header />
+                    <Header
+                        onServiceChange={ onServiceChange } />
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <RandomPlanet listItems={ planetDeps } />

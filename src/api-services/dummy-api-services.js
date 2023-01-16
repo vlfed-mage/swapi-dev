@@ -7,8 +7,6 @@ import dumb from "../images/death-star.svg";
 
 const DummyApiServices = () => {
 
-    const _bodyImgUrl = 'https://starwars-visualguide.com/assets/img/';
-
     function _extractId(url) {
         const regex = /\/([0-9]*)\/$/;
         return url.match(regex)[1];
@@ -71,6 +69,7 @@ const DummyApiServices = () => {
     };
 
     return {
+        dummy: true,
         getData: (name, id) => {
             return id
                 ? getItem(name, id)
