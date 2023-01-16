@@ -8,7 +8,7 @@ const useData = (name, id = null) => {
 
     response = useCallback(
         () => getData(name, id),
-        [ name, id ]
+        [ name, id, getData ]
     );
 
     return useRequest(response);
