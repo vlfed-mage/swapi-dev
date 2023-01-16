@@ -10,11 +10,11 @@ import {
     starshipDeps
 }  from "../sw-components";
 
-import { ApiServices } from "../../api-services";
+import { DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
 
 const App = () => {
-    const apiServices = ApiServices();
+    const apiServices = DummyApiServices();
 
     return (
         <div className='app-wrapper'>

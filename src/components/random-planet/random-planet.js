@@ -5,14 +5,14 @@ import ItemDetails from "../item-details";
 
 const RandomPlanet = ({ updateInterval, listItems }) => {
 
-    const randomId = Math.floor(Math.random()*28 + 2),
+    const randomId = Math.floor(Math.random()*10 + 1),
     _categoryName = 'planets',
 
     [ id, setId ] = useState(randomId);
 
     useEffect(() => {
         const randomPlanetInterval = setInterval(
-            () => setId(Math.floor(Math.random()*28 + 2)),
+            () => setId(Math.floor(Math.random()*10 + 1)),
             updateInterval
         )
 
