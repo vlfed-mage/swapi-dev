@@ -7,7 +7,7 @@ import ItemList from "../item-list";
 
 const Page = ({ category, listItems }) => {
 
-    const randomId = Math.floor(Math.random()*28 + 2);
+    const randomId = Math.floor(Math.random()*10 + 1);
     const [ selectedItemId, setSelectedItemId ] = useState(randomId),
     renderName = (i) => `${ i.name }`,
 
