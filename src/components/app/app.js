@@ -13,6 +13,7 @@ import {
 
 import { ApiServices, DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
+import ItemDetails from "../item-details";
 
 const App = () => {
     const [ apiService, setApiService ] = useState(DummyApiServices()),
@@ -34,21 +35,43 @@ const App = () => {
                     <ErrorBoundary>
                         <RandomPlanet listItems={ planetDeps } />
                     </ErrorBoundary>
-                    <Route path='/people' render={() => {
-                        return <Page
-                            category='people'
-                            listItems={ personDeps } />
-                    }} />
-                    <Route path='/planets' render={() => {
-                        return <Page
-                            category='planets'
-                            listItems={ planetDeps } />
-                    }} />
-                    <Route path='/starships' render={() => {
-                        return <Page
-                            category='starships'
-                            listItems={ starshipDeps } />
-                    }} />
+
+                    <Route path='/' exact
+                        render={() => <h2>Welcome to StarDB</h2>} />
+                    <Route path='/people'
+                        render={() => {
+                            return <Page
+                                category='people'
+                                listItems={ personDeps } />
+                            }
+                        }
+                    />
+                    <Route path='/planets'
+                        render={() => {
+                            return <Page
+                                category='planets'
+                                listItems={ planetDeps } />
+                            }
+                        }
+                    />
+                    <Route path='/starships' exact
+                        render={() => {
+                            return <Page
+                                category='starships'
+                                listItems={ starshipDeps } />
+                            }
+                        }
+                    />
+                    <Route path='starships/:id'
+                        render={({ match }) => { // match, location, params
+                            const { id } = match.params;
+                            return <ItemDetails
+                                name='starships'
+                                selectedItemId={ id }
+                                listItems={ starshipDeps } />
+                            }
+                        }
+                    />
                 </div>
             </Router>
         </ApiServicesContext.Provider>
