@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
@@ -8,8 +8,9 @@ import Page from "../page";
 import {
     personDeps,
     planetDeps,
-    starshipDeps
-}  from "../sw-components";
+    starshipDeps,
+    StarshipList
+} from "../sw-components";
 
 import { ApiServices, DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
@@ -17,12 +18,15 @@ import ItemDetails from "../item-details";
 
 const App = () => {
     const [ apiService, setApiService ] = useState(DummyApiServices()),
-
     onServiceChange = () => {
         const Service = apiService.dummy
             ? ApiServices
             : DummyApiServices;
         setApiService(Service());
+    },
+
+    renderStarshipDetails = () => {
+
     };
 
     return (
@@ -54,22 +58,17 @@ const App = () => {
                             }
                         }
                     />
-                    <Route path='/starships' exact
-                        render={() => {
-                            return <Page
-                                category='starships'
-                                listItems={ starshipDeps } />
-                            }
-                        }
-                    />
-                    <Route path='starships/:id'
+                    <Route path='/starships' exact component={ StarshipList } />
+
+                    <Route path='/starships/:id'
                         render={({ match }) => { // match, location, params
                             const { id } = match.params;
-                            return <ItemDetails
-                                name='starships'
-                                selectedItemId={ id }
-                                listItems={ starshipDeps } />
-                            }
+                            return (
+                                <ItemDetails name='starships'
+                                    selectedItemId={ id } >
+                                    { starshipDeps }
+                                </ItemDetails>
+                            )}
                         }
                     />
                 </div>
