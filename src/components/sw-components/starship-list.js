@@ -7,9 +7,7 @@ const StarshipList = ({ history }) => {
 
     const renderName = (i) => `${ i.name }`,
 
-    onListItemSelected = (id) => {
-        history.push(`/starships/${id}`);
-    };
+    onListItemSelected = (id) => history.push(id);
 
     return (
         <ItemList

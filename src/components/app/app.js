@@ -25,8 +25,13 @@ const App = () => {
         setApiService(Service());
     },
 
-    renderStarshipDetails = () => {
-
+    renderStarshipDetails = ({ match }) => {
+        const { id } = match.params;
+        return (
+            <ItemDetails name='starships' selectedItemId={ id } >
+                { starshipDeps }
+            </ItemDetails>
+        )
     };
 
     return (
@@ -43,33 +48,19 @@ const App = () => {
                     <Route path='/' exact
                         render={() => <h2>Welcome to StarDB</h2>} />
                     <Route path='/people'
-                        render={() => {
-                            return <Page
-                                category='people'
-                                listItems={ personDeps } />
-                            }
+                        render={() => <Page
+                            category='people'
+                            listItems={ personDeps } />
                         }
                     />
                     <Route path='/planets'
-                        render={() => {
-                            return <Page
-                                category='planets'
-                                listItems={ planetDeps } />
-                            }
+                        render={ () => <Page
+                            category='planets'
+                            listItems={ planetDeps } />
                         }
                     />
                     <Route path='/starships' exact component={ StarshipList } />
-
-                    <Route path='/starships/:id'
-                        render={({ match }) => { // match, location, params
-                            const { id } = match.params;
-                            return (
-                                <ItemDetails name='starships'
-                                    selectedItemId={ id } >
-                                    { starshipDeps }
-                                </ItemDetails>
-                            )}
-                        }
+                    <Route path='/starships/:id' render={ renderStarshipDetails }
                     />
                 </div>
             </Router>
