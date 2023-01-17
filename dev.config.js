@@ -3,6 +3,7 @@ const routes = require('./configs/routes');
 
 module.exports = {
     devServer: {
+        historyApiFallback: true,
         contentBase: routes.build,
         compress: true,
         hot: true,
