@@ -12,11 +12,15 @@
         li {
             list-style: none;
             margin: 0;
-            padding: .5rem 1rem;
             border-radius: 3px;
+            display: flex;
 
             &:hover {
                 background-color: #444;
+            }
+
+            a {
+                padding: .5rem 1rem;
             }
         }
     }

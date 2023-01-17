@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
@@ -24,25 +25,33 @@ const App = () => {
     };
 
     return (
-        <div className='app-wrapper'>
-            <ApiServicesContext.Provider value={ apiService }>
-                <ErrorBoundary>
-                    <Header
-                        onServiceChange={ onServiceChange } />
-                </ErrorBoundary>
-                <ErrorBoundary>
-                    <RandomPlanet listItems={ planetDeps } />
-                </ErrorBoundary>
-
-                <Page category='people'
-                      listItems={ personDeps } />
-                <Page category='planets'
-                      listItems={ planetDeps } />
-                <Page category='starships'
-                      listItems={ starshipDeps } />
-
-            </ApiServicesContext.Provider>
-        </div>
+        <ApiServicesContext.Provider value={ apiService }>
+            <Router>
+                <div className='app-wrapper'>
+                    <ErrorBoundary>
+                        <Header onServiceChange={ onServiceChange } />
+                    </ErrorBoundary>
+                    <ErrorBoundary>
+                        <RandomPlanet listItems={ planetDeps } />
+                    </ErrorBoundary>
+                    <Route path='/people' render={() => {
+                        return <Page
+                            category='people'
+                            listItems={ personDeps } />
+                    }} />
+                    <Route path='/planets' render={() => {
+                        return <Page
+                            category='planets'
+                            listItems={ planetDeps } />
+                    }} />
+                    <Route path='/starships' render={() => {
+                        return <Page
+                            category='starships'
+                            listItems={ starshipDeps } />
+                    }} />
+                </div>
+            </Router>
+        </ApiServicesContext.Provider>
     );
 }
 
