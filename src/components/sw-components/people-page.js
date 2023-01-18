@@ -5,24 +5,24 @@ import ErrorBoundary from "../error-boundary";
 import ItemDetails from "../item-details";
 import ItemList from "../item-list";
 import Helpers from "../helpers";
+import { withRouter } from "react-router-dom";
 
-const Page = ({ category }) => {
+const PeoplePage = ({ match, history }) => {
 
-    const randomId = Math.floor(Math.random()*10 + 1);
-    const [ selectedItemId, setSelectedItemId ] = useState(randomId),
-    renderName = (i) => `${ i.name }`,
-
+    const renderName = (i) => `${ i.name }`,
     { getDeps } = Helpers(),
 
-    onListItemSelected = (id) => {
-        setSelectedItemId(id);
+    { id } = match.params;
+
+    const onListItemSelected = (id) => {
+        history.push(`/people/${id}`)
     };
 
     return (
         <Row >
             <ErrorBoundary >
                 <ItemList
-                    name={ category }
+                    name='people'
                     onListItemSelected={ onListItemSelected } >
                     { renderName }
                 </ItemList>
@@ -30,13 +30,13 @@ const Page = ({ category }) => {
 
             <ErrorBoundary >
                 <ItemDetails
-                    name={ category }
-                    selectedItemId={ selectedItemId } >
-                    { getDeps(category) }
+                    name='people'
+                    selectedItemId={ id } >
+                    { getDeps('people') }
                 </ItemDetails>
             </ErrorBoundary>
         </Row>
     )
 }
 
-export default Page;
+export default withRouter(PeoplePage);

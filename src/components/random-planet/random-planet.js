@@ -2,11 +2,14 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 
 import ItemDetails from "../item-details";
+import Helpers from "../helpers";
 
-const RandomPlanet = ({ updateInterval, listItems }) => {
+const RandomPlanet = ({ updateInterval }) => {
 
     const randomId = Math.floor(Math.random()*10 + 1),
     _categoryName = 'planets',
+
+    { getDeps } = Helpers(),
 
     [ id, setId ] = useState(randomId);
 
@@ -25,7 +28,7 @@ const RandomPlanet = ({ updateInterval, listItems }) => {
             selectedItemId={ id }
             classNames='random-planet jumbotron rounded card' >
 
-            { listItems }
+            { getDeps(_categoryName) }
 
         </ItemDetails>
     );
