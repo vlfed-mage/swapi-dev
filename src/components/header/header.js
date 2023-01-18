@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-const Header = (props) => {
-    const { onServiceChange } = props;
+const Header = ({ onServiceChange, match, history, location }) => {
+    console.log('match: ', match, 'history: ', history, 'location: ', location);
 
     return (
         <header className='header d-flex'>
@@ -32,4 +32,4 @@ const Header = (props) => {
     );
 };
 
-export default Header;
+export default withRouter(Header);

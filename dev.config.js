@@ -3,7 +3,7 @@ const routes = require('./configs/routes');
 
 module.exports = {
     devServer: {
-        historyApiFallback: true,
+        historyApiFallback: true, // https://ui.dev/react-router-cannot-get-url-refresh#webpack--development
         contentBase: routes.build,
         compress: true,
         hot: true,

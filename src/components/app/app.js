@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import Page from "../page";
-import {
-    personDeps,
-    planetDeps,
-    starshipDeps,
-    StarshipList
-} from "../sw-components";
+import { PeoplePage, StarshipList } from "../sw-components";
 
 import { ApiServices, DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
-import ItemDetails from "../item-details";
+import ItemDetails from "../item-details"
+import Helpers from "../helpers";
 
 const App = () => {
     const [ apiService, setApiService ] = useState(DummyApiServices()),
+    { getDeps } = Helpers(),
+
     onServiceChange = () => {
         const Service = apiService.dummy
             ? ApiServices
@@ -25,14 +23,18 @@ const App = () => {
         setApiService(Service());
     },
 
+    renderPlanetsPage = () => <Page category='planets' />,
     renderStarshipDetails = ({ match }) => {
-        const { id } = match.params;
+        const { id } = match.params,
+        name = 'starships';
+
         return (
-            <ItemDetails name='starships' selectedItemId={ id } >
-                { starshipDeps }
+            <ItemDetails name={ name } selectedItemId={ id } >
+                { getDeps(name) }
             </ItemDetails>
         )
     };
+
 
     return (
         <ApiServicesContext.Provider value={ apiService }>
@@ -42,24 +44,13 @@ const App = () => {
                         <Header onServiceChange={ onServiceChange } />
                     </ErrorBoundary>
                     <ErrorBoundary>
-                        <RandomPlanet listItems={ planetDeps } />
+                        <RandomPlanet/>
                     </ErrorBoundary>
 
-                    <Route path='/' exact
-                        render={() => <h2>Welcome to StarDB</h2>} />
-                    <Route path='/people'
-                        render={() => <Page
-                            category='people'
-                            listItems={ personDeps } />
-                        }
-                    />
-                    <Route path='/planets'
-                        render={ () => <Page
-                            category='planets'
-                            listItems={ planetDeps } />
-                        }
-                    />
-                    <Route path='/starships' exact component={ StarshipList } />
+                    <Route path='/' exact render={ () => <h3>Welcome to StarDB</h3>} />
+                    <Route path='/people/:id?' component={ PeoplePage } />
+                    <Route path='/planets/' render={ renderPlanetsPage } />
+                    <Route path='/starships/' exact component={ StarshipList } />
                     <Route path='/starships/:id' render={ renderStarshipDetails }
                     />
                 </div>

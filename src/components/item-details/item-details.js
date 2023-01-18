@@ -16,6 +16,14 @@ const ItemDetails = ( props ) => {
         ? props.classNames
         : 'item-details card';
 
+    if (data && data.length) { // check if data is array
+        return (
+            <div className= { classNames } >
+                <span>Select item from the list</span>
+            </div>
+        )
+    }
+
     return (
         <div className= { classNames } >
 
