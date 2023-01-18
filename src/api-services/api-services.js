@@ -91,7 +91,8 @@ const ApiServices = () => {
 
     return {
         getData: (name, id) => {
-            return id
+            console.log(id)
+            return id && id !== undefined
                 ? getItem(name, id)
                 : getCollection(name);
         },
