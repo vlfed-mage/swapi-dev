@@ -16,7 +16,7 @@ const ItemDetails = ( props ) => {
         ? props.classNames
         : 'item-details card';
 
-    if (data && data.length) { // check if data is array
+    if (!selectedItemId) { // check if id is selected
         return (
             <div className= { classNames } >
                 <span>Select item from the list</span>

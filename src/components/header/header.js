@@ -1,27 +1,30 @@
 import React from 'react';
 
-import { Link, withRouter } from "react-router-dom";
+import { NavLink, withRouter} from "react-router-dom";
 
-const Header = ({ onServiceChange, match, history, location }) => {
-    console.log('match: ', match, 'history: ', history, 'location: ', location);
+const Header = ({ onServiceChange }) => {
+
+    const menu = ['people', 'planets', 'starships'],
+    renderLinks = menu.map((el) => {
+        const name = el.charAt(0).toUpperCase() + el.slice(1);
+        return (
+            <li>
+                <NavLink to={ `/${el}/` } activeClassName='active'>
+                    { name }
+                </NavLink>
+            </li>
+        );
+    });
 
     return (
         <header className='header d-flex'>
             <h3>
-                <Link to='/'>
+                <NavLink to='/'>
                     Star DB
-                </Link>
+                </NavLink>
             </h3>
             <ul className='d-flex'>
-                <li>
-                    <Link to='/people/'>People</Link>
-                </li>
-                <li>
-                    <Link to='/planets/'>Planets</Link>
-                </li>
-                <li>
-                    <Link to='/starships/'>Starships</Link>
-                </li>
+                { renderLinks }
             </ul>
             <button
                 className='btn btn-primary btn-sm'
