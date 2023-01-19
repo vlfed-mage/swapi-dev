@@ -4,13 +4,15 @@ import { NavLink, withRouter} from "react-router-dom";
 
 const Header = ({ onServiceChange }) => {
 
-    const menu = ['people', 'planets', 'starships'],
+    const menu = [ 'people', 'planets', 'starships', 'login', 'protected' ],
 
-    renderLinks = menu.map((el) => {
-        const name = el.charAt(0).toUpperCase() + el.slice(1);
+    renderLinks = menu.map((el,idx ) => {
+        const name = el.charAt(0).toUpperCase() + el.slice(1),
+        url = idx > 2 ? `/${el}` : `/${el}/`;
+
         return (
-            <li>
-                <NavLink to={ `/${el}/` } activeClassName='active'>
+            <li key={ el }>
+                <NavLink to={ url } activeClassName='active'>
                     { name }
                 </NavLink>
             </li>

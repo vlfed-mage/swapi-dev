@@ -5,7 +5,7 @@ import ErrorBoundary from "../error-boundary";
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import Page from "../page";
-import { PeoplePage, StarshipList } from "../sw-components";
+import { LoginPage, PeoplePage, ProtectedPage, StarshipList } from "../sw-components";
 
 import { ApiServices, DummyApiServices } from "../../api-services";
 import ApiServicesContext from "../sw-service-context";
@@ -14,6 +14,8 @@ import Helpers from "../helpers";
 
 const App = () => {
     const [ apiService, setApiService ] = useState(DummyApiServices()),
+    [ isLoggedIn, setIsLoggedIn ] = useState(false),
+
     { getDeps } = Helpers(),
 
     onServiceChange = () => {
@@ -22,6 +24,8 @@ const App = () => {
             : DummyApiServices;
         setApiService(Service());
     },
+
+    onLogin = () => setIsLoggedIn(true),
 
     renderPlanetsPage = () => <Page category='planets' />,
     renderStarshipDetails = ({ match }) => {
@@ -33,8 +37,9 @@ const App = () => {
                 { getDeps(name) }
             </ItemDetails>
         )
-    };
-
+    },
+    renderLoginPage = () => <LoginPage isLoggedIn={ isLoggedIn } onLogin={ onLogin }/>,
+    renderProtectedPage = () => <ProtectedPage isLoggedIn={ isLoggedIn } />;
 
     return (
         <ApiServicesContext.Provider value={ apiService }>
@@ -51,8 +56,9 @@ const App = () => {
                     <Route path='/people/:id?' component={ PeoplePage } />
                     <Route path='/planets/' render={ renderPlanetsPage } />
                     <Route path='/starships/' exact component={ StarshipList } />
-                    <Route path='/starships/:id' render={ renderStarshipDetails }
-                    />
+                    <Route path='/starships/:id' render={ renderStarshipDetails } />
+                    <Route path='/login' render={ renderLoginPage } />
+                    <Route path='/protected' render={ renderProtectedPage } />
                 </div>
             </Router>
         </ApiServicesContext.Provider>

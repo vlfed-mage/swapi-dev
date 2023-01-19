@@ -4,6 +4,7 @@
     padding: 1rem;
     min-height: 184px;
     position: relative;
+    margin-bottom: 1rem;
 
     .planets-image {
         width: 150px;
@@ -22,9 +23,5 @@
                 margin-right: .5rem;
             }
         }
-    }
-
-    + h3 {
-        margin-top: 1rem;
     }
 }
