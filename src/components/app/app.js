@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import ErrorBoundary from "../error-boundary";
 import Header from '../header';
@@ -52,13 +52,17 @@ const App = () => {
                         <RandomPlanet/>
                     </ErrorBoundary>
 
-                    <Route path='/' exact render={ () => <h3>Welcome to StarDB</h3>} />
-                    <Route path='/people/:id?' component={ PeoplePage } />
-                    <Route path='/planets/' render={ renderPlanetsPage } />
-                    <Route path='/starships/' exact component={ StarshipList } />
-                    <Route path='/starships/:id' render={ renderStarshipDetails } />
-                    <Route path='/login' render={ renderLoginPage } />
-                    <Route path='/protected' render={ renderProtectedPage } />
+                    <Switch>
+                        <Route path='/' exact render={ () => <h3>Welcome to StarDB</h3>} />
+                        <Route path='/people/:id?' component={ PeoplePage } />
+                        <Route path='/planets/' render={ renderPlanetsPage } />
+                        <Route path='/starships/' exact component={ StarshipList } />
+                        <Route path='/starships/:id' render={ renderStarshipDetails } />
+                        <Route path='/login' render={ renderLoginPage } />
+                        <Route path='/protected' render={ renderProtectedPage } />
+                        <Route render={ () => <h2>404</h2> } />
+                    </Switch>
+
                 </div>
             </Router>
         </ApiServicesContext.Provider>
